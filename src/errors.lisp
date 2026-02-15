@@ -1,4 +1,4 @@
-(in-package :openweathermap-onecall)
+(in-package :openweathermap)
 
 (define-condition api-request-error (error)
   ((status-code :initarg :status-code :reader api-request-error-status-code)
@@ -23,6 +23,12 @@
              (format stream "Unable to parse API response~@[ from ~A~]: ~A"
                      (api-request-error-endpoint condition)
                      (api-request-error-message condition)))))
+
+(define-condition invalid-parameters-error (error)
+  ((message :initarg :message :reader invalid-parameters-error-message))
+  (:report (lambda (condition stream)
+             (format stream "Invalid request parameters: ~A"
+                     (invalid-parameters-error-message condition)))))
 
 (define-condition missing-api-key-error (error)
   ()

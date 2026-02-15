@@ -1,13 +1,13 @@
-(defpackage :openweathermap-onecall/integration-tests
+(defpackage :openweathermap/integration-tests
   (:use :cl :fiveam)
-  (:import-from :openweathermap-onecall
+  (:import-from :openweathermap
                 :*api-key*
                 :build-onecall-url)
   (:export :run-integration-tests))
 
-(in-package :openweathermap-onecall/integration-tests)
+(in-package :openweathermap/integration-tests)
 
-(def-suite openweathermap-onecall-integration-suite
-  :description "Live API integration tests for openweathermap-onecall")
+(def-suite openweathermap-integration-suite
+  :description "Live API integration tests for openweathermap")
 
-(in-suite openweathermap-onecall-integration-suite)
+(in-suite openweathermap-integration-suite)

@@ -1,10 +1,8 @@
-# OpenWeatherMap OneCall API Client
+# OpenWeatherMap API Client
 
 ## Description
 
-This is a Common Lisp client for the OpenWeatherMap OneCall 3.0 API. It is generated from API documentation. This is a library meant to be used in other Lisp applications.
-
-**API Documentation**: https://openweathermap.org/api/one-call-3?collection=one_call_api_3.0
+This is a Common Lisp client for multiple OpenWeatherMap APIs. It is generated from API documentation. This is a library meant to be used in other Lisp applications.
 
 ## Tech stack
 
@@ -20,6 +18,16 @@ This is a Common Lisp client for the OpenWeatherMap OneCall 3.0 API. It is gener
     - In addition to unit tests, we will develop a suite of intergration tests against the live API, which are run separately.
 - This project must have a good development story, with a comprehensive Makefile in addition to idiomatic Common Lisp patterns for development (running tests, etc.)
 - This project should follow idiomatic Common Lisp best practices.
-- Extensively read the API documentation and create an OpenAPI / Swagger file for the OpenWeatherMap OneCall 3.0 API
+- Extensively read the API documentation and create OpenAPI / Swagger files for each supported OpenWeatherMap API family.
 
-## Project structure
+## API Updates
+
+Please research and create OpenAPI docs for the following:
+
+- https://openweathermap.org/api/one-call-3?collection=one_call_api_3.0
+- https://openweathermap.org/current?collection=current_forecast
+- https://openweathermap.org/forecast5?collection=current_forecast
+- https://openweathermap.org/api/air-pollution?collection=environmental
+- https://openweathermap.org/api/weathermaps?collection=maps
+- https://openweathermap.org/api/geocoding-api?collection=other
+
