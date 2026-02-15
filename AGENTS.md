@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: MIT -->
+
 # OpenWeatherMap Agent Guide
 
 ## Purpose

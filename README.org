@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 * OpenWeatherMap API Client
 
 Common Lisp client library for multiple OpenWeatherMap APIs: https://openweathermap.org/api
