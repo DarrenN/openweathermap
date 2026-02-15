@@ -16,6 +16,45 @@
     (number (princ-to-string value))
     (symbol (string-downcase (symbol-name value)))))
 
+(defun %utf8-octets-for-codepoint (codepoint)
+  (cond
+    ((<= codepoint #x7F)
+     (list codepoint))
+    ((<= codepoint #x7FF)
+     (list (+ #xC0 (ash codepoint -6))
+           (+ #x80 (logand codepoint #x3F))))
+    ((<= codepoint #xFFFF)
+     (list (+ #xE0 (ash codepoint -12))
+           (+ #x80 (logand (ash codepoint -6) #x3F))
+           (+ #x80 (logand codepoint #x3F))))
+    ((<= codepoint #x10FFFF)
+     (list (+ #xF0 (ash codepoint -18))
+           (+ #x80 (logand (ash codepoint -12) #x3F))
+           (+ #x80 (logand (ash codepoint -6) #x3F))
+           (+ #x80 (logand codepoint #x3F))))
+    (t
+     (error "Unsupported Unicode codepoint: ~A" codepoint))))
+
+(defun %string-utf8-octets (string)
+  (loop for ch across string
+        append (%utf8-octets-for-codepoint (char-code ch))))
+
+(defun %unreserved-uri-octet-p (octet)
+  (or (and (>= octet (char-code #\A)) (<= octet (char-code #\Z)))
+      (and (>= octet (char-code #\a)) (<= octet (char-code #\z)))
+      (and (>= octet (char-code #\0)) (<= octet (char-code #\9)))
+      (= octet (char-code #\-))
+      (= octet (char-code #\_))
+      (= octet (char-code #\.))
+      (= octet (char-code #\~))))
+
+(defun %percent-encode-uri-component (string)
+  (with-output-to-string (stream)
+    (dolist (octet (%string-utf8-octets string))
+      (if (%unreserved-uri-octet-p octet)
+          (write-char (code-char octet) stream)
+          (format stream "%~2,'0X" octet)))))
+
 (defun %query-string-from-plist (query-params)
   (with-output-to-string (stream)
     (loop for (key value) on query-params by #'cddr
@@ -23,8 +62,8 @@
           do (when (> index 0)
                (write-char #\& stream))
              (format stream "~A=~A"
-                     (%normalize-param-key key)
-                     (%stringify-param-value value)))))
+                     (%percent-encode-uri-component (%normalize-param-key key))
+                     (%percent-encode-uri-component (%stringify-param-value value))))))
 
 (defun %build-endpoint-url (path base-params extra-params)
   (let* ((api-key (ensure-api-key))

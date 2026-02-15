@@ -26,6 +26,9 @@
   (is (equal (%sorted-copy expected-keys)
              (%sorted-copy (%query-keys url)))))
 
+(defun %assert-query-value= (url key expected-value)
+  (is (string= expected-value (%query-value url key))))
+
 (defun %assert-no-truncated-keys (url)
   (is (null (%query-value url "ppid")))
   (is (null (%query-value url "at")))
@@ -43,8 +46,8 @@
                          :exclude "minutely,alerts")))
       (%assert-query-keys= required-url '("lat" "lon" "appid"))
       (%assert-query-keys= optional-url '("lat" "lon" "appid" "units" "lang" "exclude"))
-      (is (string= "test-key" (%query-value required-url "appid")))
-      (is (string= "minutely,alerts" (%query-value optional-url "exclude")))
+      (%assert-query-value= required-url "appid" "test-key")
+      (%assert-query-value= optional-url "exclude" "minutely%2Calerts")
       (%assert-no-truncated-keys optional-url))))
 
 (test timemachine-required-and-optional-query-params
@@ -69,7 +72,8 @@
                          :lang "ja")))
       (%assert-query-keys= required-url '("lat" "lon" "date" "appid"))
       (%assert-query-keys= optional-url '("lat" "lon" "date" "appid" "tz" "units" "lang"))
-      (is (string= "2026-02-15" (%query-value required-url "date")))
+      (%assert-query-value= required-url "date" "2026-02-15")
+      (%assert-query-value= optional-url "tz" "%2B09%3A00")
       (%assert-no-truncated-keys optional-url))))
 
 (test overview-required-and-optional-query-params
@@ -78,7 +82,7 @@
           (optional-url (openweathermap:build-overview-url 35.0 139.0 :date "2026-02-16" :units :imperial)))
       (%assert-query-keys= required-url '("lat" "lon" "appid"))
       (%assert-query-keys= optional-url '("lat" "lon" "appid" "date" "units"))
-      (is (string= "2026-02-16" (%query-value optional-url "date")))
+      (%assert-query-value= optional-url "date" "2026-02-16")
       (%assert-no-truncated-keys optional-url))))
 
 (test current-required-location-variants-and-optional-query-params
@@ -120,8 +124,8 @@
 
 (test geocoding-required-and-optional-query-params
   (let ((openweathermap:*api-key* "test-key"))
-    (let ((direct-required (openweathermap:build-geocoding-url "London"))
-          (direct-optional (openweathermap:build-geocoding-url "London" :limit 5))
+    (let ((direct-required (openweathermap:build-geocoding-url "New York"))
+          (direct-optional (openweathermap:build-geocoding-url "New York" :limit 5))
           (reverse-required (openweathermap:build-reverse-geocoding-url 35.0 139.0))
           (reverse-optional (openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 3))
           (zip-required (openweathermap:build-zip-geocoding-url "94040"))
@@ -132,7 +136,8 @@
       (%assert-query-keys= reverse-optional '("lat" "lon" "limit" "appid"))
       (%assert-query-keys= zip-required '("zip" "appid"))
       (%assert-query-keys= zip-optional '("zip" "appid"))
-      (is (string= "94040,US" (%query-value zip-optional "zip")))
+      (%assert-query-value= direct-required "q" "New%20York")
+      (%assert-query-value= zip-optional "zip" "94040%2CUS")
       (%assert-no-truncated-keys direct-optional))))
 
 (test air-pollution-required-query-params
@@ -148,7 +153,8 @@
 (test maps-required-and-optional-query-params
   (let ((openweathermap:*api-key* "test-key"))
     (let ((required-url (openweathermap:build-weather-tile-url :temp_new 3 2 3))
-          (optional-url (openweathermap:build-weather-tile-url :temp_new 3 2 3 :opacity 0.9 :palette "warm")))
+          (optional-url (openweathermap:build-weather-tile-url :temp_new 3 2 3 :opacity 0.9 :palette "warm/cold")))
       (%assert-query-keys= required-url '("appid"))
       (%assert-query-keys= optional-url '("appid" "opacity" "palette"))
+      (%assert-query-value= optional-url "palette" "warm%2Fcold")
       (%assert-no-truncated-keys optional-url))))
