@@ -19,6 +19,13 @@ All notable changes to this project are tracked here.
   - `/data/3.0/onecall/day_summary`
   - `/data/3.0/onecall/overview`
 - Node tooling manifest `package.json` with `@redocly/cli` dev dependency.
+- Phase 3 client API functions:
+  - URL builders for all core endpoints (`build-onecall-url`, `build-timemachine-url`, `build-day-summary-url`, `build-overview-url`)
+  - Request builders (`make-client-weather-request`, `make-timemachine-request`, `make-day-summary-request`, `make-overview-request`)
+  - Fetch functions with JSON decoding (`fetch-onecall`, `fetch-timemachine`, `fetch-day-summary`, `fetch-overview`)
+- Runtime configuration knobs for timeout and retry behavior (`configure-client`, `*request-timeout-seconds*`, `*max-retries*`, `*retry-backoff-seconds*`).
+- Additional structured error conditions for network and parse failures (`api-network-error`, `api-response-parse-error`).
+- Expanded unit test coverage for endpoint URL building, fetch/retry behavior, and error signaling.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -26,6 +33,8 @@ All notable changes to this project are tracked here.
 - Switched `make spec-check` from `swagger-cli` to Redocly CLI (`redocly lint spec/openapi.yaml`).
 - Updated `README.org` prerequisites and setup instructions to include Redocly CLI installation via `npm install`.
 - Added `info.license` metadata to OpenAPI spec to satisfy Redocly recommended rules.
+- Updated core ASDF system dependencies to include `dexador` (HTTP) and `jonathan` (JSON).
+- Expanded `README.org` with public API usage examples for fetch/build functions and runtime configuration.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

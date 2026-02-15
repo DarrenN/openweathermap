@@ -2,9 +2,19 @@
   (:use :cl :fiveam)
   (:import-from :openweathermap-onecall
                 :*api-key*
+                :*max-retries*
+                :*retry-backoff-seconds*
                 :configure-api-key
                 :build-onecall-url
-                :make-client-weather-request)
+                :build-timemachine-url
+                :build-day-summary-url
+                :build-overview-url
+                :make-client-weather-request
+                :make-timemachine-request
+                :fetch-onecall
+                :api-request-error
+                :api-network-error
+                :with-http-get-function)
   (:export :run-tests))
 
 (in-package :openweathermap-onecall/tests)

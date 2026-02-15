@@ -53,6 +53,32 @@ make spec-check
 - Keep API spec in =spec/openapi.yaml=.
 - Update =CHANGELOG.md= for each session.
 
+** Public API (Current Draft)
+Configure client settings:
+#+begin_src lisp
+(openweathermap-onecall:configure-api-key "your-api-key")
+(openweathermap-onecall:configure-client
+ :request-timeout-seconds 10
+ :max-retries 2
+ :retry-backoff-seconds 1)
+#+end_src
+
+Fetch JSON-decoded responses (plist form):
+#+begin_src lisp
+(openweathermap-onecall:fetch-onecall 35.0 139.0 :units :metric :lang "en")
+(openweathermap-onecall:fetch-timemachine 35.0 139.0 1700000000 :units :metric)
+(openweathermap-onecall:fetch-day-summary 35.0 139.0 "2026-02-15" :units :metric)
+(openweathermap-onecall:fetch-overview 35.0 139.0 :date "2026-02-16")
+#+end_src
+
+Build request URLs only (no network call):
+#+begin_src lisp
+(openweathermap-onecall:build-onecall-url 35.0 139.0 :units :metric)
+(openweathermap-onecall:build-timemachine-url 35.0 139.0 1700000000)
+(openweathermap-onecall:build-day-summary-url 35.0 139.0 "2026-02-15")
+(openweathermap-onecall:build-overview-url 35.0 139.0)
+#+end_src
+
 ** Current Project Layout
 #+begin_src text
 src/

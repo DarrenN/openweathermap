@@ -17,11 +17,11 @@ Set up a production-quality Common Lisp client for OpenWeatherMap One Call 3.0 w
 - [x] Record assumptions and unresolved doc ambiguities.
 
 ## Phase 3: Client Core
-- [ ] Implement HTTP client layer (timeouts, retries, base URL, API key handling).
-- [ ] Implement request builders for each One Call operation.
-- [ ] Implement response decoding into idiomatic Lisp structures.
-- [ ] Add robust error mapping (HTTP/network/API-level errors).
-- [ ] Document public API surface and usage examples.
+- [x] Implement HTTP client layer (timeouts, retries, base URL, API key handling).
+- [x] Implement request builders for each One Call operation.
+- [x] Implement response decoding into idiomatic Lisp structures.
+- [x] Add robust error mapping (HTTP/network/API-level errors).
+- [x] Document public API surface and usage examples.
 
 ## Phase 4: Testing
 - [ ] Add unit tests for request serialization and response parsing.
@@ -39,8 +39,8 @@ Set up a production-quality Common Lisp client for OpenWeatherMap One Call 3.0 w
 ## Suggested Execution Order (Immediate)
 1. [x] Foundation skeleton + tooling + `README.org` + `CHANGELOG.md`.
 2. [x] OpenAPI spec draft for core One Call endpoints.
-3. Minimal client implementation for one endpoint path.
-4. Unit test baseline and integration test scaffolding.
+3. [x] Minimal client implementation for one endpoint path.
+4. [x] Unit test baseline and integration test scaffolding.
 
 ## Phase 2 Notes (Assumptions / Ambiguities)
 - The draft spec currently targets the four core `/data/3.0` One Call weather endpoints and does not yet include assistant/chat-style endpoints.

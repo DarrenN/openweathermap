@@ -4,7 +4,7 @@
   :license "MIT"
   :version "0.1.0"
   :serial t
-  :depends-on ()
+  :depends-on ("dexador" "jonathan")
   :components
   ((:file "src/package")
    (:file "src/errors")
