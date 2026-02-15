@@ -178,6 +178,31 @@ This client accepts Common Lisp values and serializes them into query params.
 | Maps            | =fetch-weather-tile=                   | =:opacity=        | number                | no       | e.g. =0.7=                                     |
 | Maps            | =fetch-weather-tile=                   | =:palette=        | string                | no       | e.g. ="warm/cold"=                             |
 
+** Response Types (Draft)
+The table below summarizes successful (=200 OK=) response shapes based on OpenWeather docs and current project specs.
+
+| API Family / Endpoint | Function(s) | Response Type | Top-level fields (typical) |
+|-----------------------+-------------+---------------+----------------------------|
+| One Call `/data/3.0/onecall` | =fetch-onecall= | JSON object (plist) | =lat= number, =lon= number, =timezone= string, =timezone_offset= integer, =current= object, =minutely= array, =hourly= array, =daily= array, =alerts= array |
+| One Call Timemachine `/data/3.0/onecall/timemachine` | =fetch-timemachine= | JSON object (plist) | =lat=, =lon=, =timezone=, =timezone_offset=, =data= array of weather objects |
+| One Call Day Summary `/data/3.0/onecall/day_summary` | =fetch-day-summary= | JSON object (plist) | =lat=, =lon=, =tz=, =date= (YYYY-MM-DD), =units=, =temperature= object, =humidity= object, =cloud_cover= object, =pressure= object, =precipitation= object, =wind= object |
+| One Call Overview `/data/3.0/onecall/overview` | =fetch-overview= | JSON object (plist) | =lat=, =lon=, =tz=, =date=, =units=, =weather_overview= string |
+| Current Weather `/data/2.5/weather` | =fetch-current-weather= | JSON object (plist) | =coord= object, =weather= array, =base= string, =main= object, =visibility= integer, =wind= object, =clouds= object, =rain= object?, =snow= object?, =dt= integer, =sys= object, =timezone= integer, =id= integer, =name= string, =cod= integer/string |
+| Forecast `/data/2.5/forecast` | =fetch-forecast= | JSON object (plist) | =cod= string, =message= number, =cnt= integer, =list= array (forecast steps), =city= object |
+| Geocoding Direct `/geo/1.0/direct` | =fetch-geocoding= | JSON array (list) | each item typically has =name= string, =local_names= object?, =lat= number, =lon= number, =country= string, =state= string? |
+| Geocoding Reverse `/geo/1.0/reverse` | =fetch-reverse-geocoding= | JSON array (list) | same item shape as direct geocoding |
+| Geocoding ZIP `/geo/1.0/zip` | =fetch-zip-geocoding= | JSON object (plist) | =zip= string, =name= string, =lat= number, =lon= number, =country= string |
+| Air Pollution Current `/data/2.5/air_pollution` | =fetch-air-pollution= | JSON object (plist) | =coord= object, =list= array; each item includes =dt=, =main= (=aqi=), =components= (pollutant concentrations) |
+| Air Pollution Forecast `/data/2.5/air_pollution/forecast` | =fetch-air-pollution-forecast= | JSON object (plist) | same top-level shape as current air pollution |
+| Air Pollution History `/data/2.5/air_pollution/history` | =fetch-air-pollution-history= | JSON object (plist) | same top-level shape as current air pollution |
+| Maps Tile `/map/{layer}/{z}/{x}/{y}.png` | =fetch-weather-tile= | Binary payload | PNG image bytes/string payload (not JSON) |
+
+Notes:
+- In Lisp, JSON objects are decoded as property lists by default.
+- JSON arrays decode to Lisp lists.
+- Optional fields may be absent depending on endpoint, location, and data availability.
+- For One Call endpoint schemas, see =spec/onecall.yaml=.
+
 ** Current Project Layout
 #+begin_src text
 src/
