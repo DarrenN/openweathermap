@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (let ((quicklisp-setup (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname))))
   (when (probe-file quicklisp-setup)
     (load quicklisp-setup)))

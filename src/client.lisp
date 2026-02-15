@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap)
 
 (defvar *http-get-function* nil

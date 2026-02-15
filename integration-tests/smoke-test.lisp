@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/integration-tests)
 
 (in-suite onecall-integration-suite)

@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap)
 
 (defparameter *api-base-url* "https://api.openweathermap.org")

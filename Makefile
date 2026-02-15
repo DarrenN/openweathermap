@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 PROJECT := openweathermap
 UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests

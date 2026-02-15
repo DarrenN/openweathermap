@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (load (merge-pathnames "common-loader.lisp" *load-truename*))
 
 (in-package :openweathermap)

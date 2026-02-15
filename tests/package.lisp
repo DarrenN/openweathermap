@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (defpackage :openweathermap/tests
   (:use :cl :fiveam)
   (:import-from :openweathermap

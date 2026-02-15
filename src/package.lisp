@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (defpackage :openweathermap
   (:use :cl)
   (:export

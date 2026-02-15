@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/integration-tests)
 
 (defun %env-true-p (value)

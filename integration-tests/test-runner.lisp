@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/integration-tests)
 
 (defun %run-suite-or-fail (suite-name failure-message)

@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/tests)
 
 (test configure-api-key-stores-value

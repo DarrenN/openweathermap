@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/tests)
 
 (test build-forecast-url-by-coordinates

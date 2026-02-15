@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (asdf:defsystem "openweathermap-tests"
   :description "Unit tests for openweathermap"
   :author "OpenWeatherMap API Client Contributors"

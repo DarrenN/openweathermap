@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap/tests)
 
 (test build-onecall-url-embeds-core-params

@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: MIT
 (in-package :openweathermap)
 
 (defun %forecast-location-valid-p (lat lon q id zip)
