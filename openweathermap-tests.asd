@@ -10,6 +10,7 @@
    (:file "tests/current-test")
    (:file "tests/forecast-test")
    (:file "tests/geocoding-test")
+   (:file "tests/air-pollution-test")
    (:file "tests/client-test")
    (:file "tests/test-runner"))
   :perform (asdf:test-op (op c)

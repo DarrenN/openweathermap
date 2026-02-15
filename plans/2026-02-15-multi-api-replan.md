@@ -37,7 +37,7 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Implement Current Weather client endpoints + tests.
 - [x] Implement Forecast client endpoints + tests.
 - [x] Implement Geocoding client endpoints + tests.
-- [ ] Implement Air Pollution endpoints + tests.
+- [x] Implement Air Pollution endpoints + tests.
 - [ ] Implement Weather Maps endpoints + tests.
 - [ ] Integrate One Call module under the renamed package.
 

@@ -14,10 +14,15 @@
                 :build-geocoding-url
                 :build-reverse-geocoding-url
                 :build-zip-geocoding-url
+                :build-air-pollution-url
+                :build-air-pollution-forecast-url
+                :build-air-pollution-history-url
                 :make-client-weather-request
                 :make-current-weather-request
                 :make-forecast-request
                 :make-geocoding-request
+                :make-air-pollution-request
+                :make-air-pollution-history-request
                 :make-timemachine-request
                 :fetch-onecall
                 :fetch-current-weather
@@ -25,6 +30,9 @@
                 :fetch-geocoding
                 :fetch-reverse-geocoding
                 :fetch-zip-geocoding
+                :fetch-air-pollution
+                :fetch-air-pollution-forecast
+                :fetch-air-pollution-history
                 :api-request-error
                 :api-network-error
                 :invalid-parameters-error

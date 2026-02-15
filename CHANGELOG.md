@@ -50,6 +50,11 @@ All notable changes to this project are tracked here.
   - reverse geocoding (`/geo/1.0/reverse`)
   - ZIP geocoding (`/geo/1.0/zip`)
 - Dedicated geocoding unit tests in `tests/geocoding-test.lisp`.
+- Air Pollution endpoint implementation in `src/apis/air-pollution.lisp`:
+  - current air pollution (`/data/2.5/air_pollution`)
+  - air pollution forecast (`/data/2.5/air_pollution/forecast`)
+  - air pollution history (`/data/2.5/air_pollution/history`)
+- Dedicated air pollution unit tests in `tests/air-pollution-test.lisp`.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -67,6 +72,7 @@ All notable changes to this project are tracked here.
 - Updated unit test system definition to include `tests/current-test.lisp`.
 - Updated unit test system definition to include `tests/forecast-test.lisp`.
 - Updated unit test system definition to include `tests/geocoding-test.lisp`.
+- Updated unit test system definition to include `tests/air-pollution-test.lisp`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.
