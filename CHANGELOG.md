@@ -61,6 +61,16 @@ All notable changes to this project are tracked here.
   - raw tile fetcher (`fetch-weather-tile`)
   - validation for layer, z, x, y parameters.
 - Dedicated maps unit tests in `tests/maps-test.lisp`.
+- Integration test refactor for per-API live suites in `integration-tests/smoke-test.lisp`:
+  - onecall
+  - current
+  - forecast
+  - geocoding
+  - air-pollution
+  - maps
+- Integration helpers and suite runners:
+  - `integration-tests/helpers.lisp`
+  - expanded `integration-tests/test-runner.lisp` with per-suite runner functions.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -80,6 +90,15 @@ All notable changes to this project are tracked here.
 - Updated unit test system definition to include `tests/geocoding-test.lisp`.
 - Updated unit test system definition to include `tests/air-pollution-test.lisp`.
 - Updated unit test system definition to include `tests/maps-test.lisp`.
+- Updated integration ASDF definition to load helper modules.
+- Added Makefile integration smoke targets per API family:
+  - `integration-onecall`
+  - `integration-current`
+  - `integration-forecast`
+  - `integration-geocoding`
+  - `integration-air-pollution`
+  - `integration-maps`
+- Integration runs are now explicitly env-gated by `OPENWEATHERMAP_RUN_LIVE_TESTS` in addition to `OPENWEATHER_API_KEY`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

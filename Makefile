@@ -3,12 +3,18 @@ UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
 REDOCLY := ./node_modules/.bin/redocly
 
-.PHONY: help test unit integration test-all check lint spec-check repl tree prepare-cache
+.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check repl tree prepare-cache
 
 help:
 	@echo "Available targets:"
 	@echo "  make unit           Run unit tests"
-	@echo "  make integration    Run integration tests (requires OPENWEATHER_API_KEY)"
+	@echo "  make integration    Run integration tests (requires OPENWEATHER_API_KEY and OPENWEATHERMAP_RUN_LIVE_TESTS=1)"
+	@echo "  make integration-onecall       Run One Call integration smoke tests"
+	@echo "  make integration-current       Run Current Weather integration smoke tests"
+	@echo "  make integration-forecast      Run Forecast integration smoke tests"
+	@echo "  make integration-geocoding     Run Geocoding integration smoke tests"
+	@echo "  make integration-air-pollution Run Air Pollution integration smoke tests"
+	@echo "  make integration-maps          Run Maps integration smoke tests"
 	@echo "  make test           Alias for unit"
 	@echo "  make test-all       Run unit + integration"
 	@echo "  make check          Run lint + unit tests"
@@ -33,6 +39,54 @@ integration: prepare-cache
 		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
 		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
 		--eval '(asdf:test-system :$(INTEGRATION_SYSTEM))'
+
+integration-onecall: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-onecall-integration-tests)'
+
+integration-current: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-current-integration-tests)'
+
+integration-forecast: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-forecast-integration-tests)'
+
+integration-geocoding: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-geocoding-integration-tests)'
+
+integration-air-pollution: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-air-pollution-integration-tests)'
+
+integration-maps: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(uiop:symbol-call :openweathermap/integration-tests :run-maps-integration-tests)'
 
 test-all:
 	@$(MAKE) unit

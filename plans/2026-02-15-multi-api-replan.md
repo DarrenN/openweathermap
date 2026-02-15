@@ -42,10 +42,10 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Integrate One Call module under the renamed package.
 
 ## Phase E: Testing and Integration Quality
-- [ ] Expand unit test suite per endpoint family.
-- [ ] Build integration test suites per API family (opt-in, env-gated).
-- [ ] Add smoke targets for each API family in Makefile.
-- [ ] Confirm non-live test path is CI-safe and deterministic.
+- [x] Expand unit test suite per endpoint family.
+- [x] Build integration test suites per API family (opt-in, env-gated).
+- [x] Add smoke targets for each API family in Makefile.
+- [x] Confirm non-live test path is CI-safe and deterministic.
 
 ## Phase F: Documentation and Release Readiness
 - [ ] Rewrite `README.org` for multi-API usage and migration notes.

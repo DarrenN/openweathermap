@@ -33,11 +33,24 @@ make unit
 #+end_src
 
 *** Run integration tests
-Set your API key first:
+Set your API key and enable live integration runs:
 #+begin_src sh
 export OPENWEATHER_API_KEY="your-key"
+export OPENWEATHERMAP_RUN_LIVE_TESTS=1
 make integration
 #+end_src
+
+Per-API integration smoke targets:
+#+begin_src sh
+make integration-onecall
+make integration-current
+make integration-forecast
+make integration-geocoding
+make integration-air-pollution
+make integration-maps
+#+end_src
+
+If =OPENWEATHERMAP_RUN_LIVE_TESTS= is not set to =1= (or =true/=yes), integration tests are skipped.
 
 *** Validate OpenAPI spec
 #+begin_src sh
@@ -46,6 +59,7 @@ make spec-check
 
 ** Development Workflow
 - Use =make check= for local quality checks.
+- Use =make unit= or =make check= for deterministic non-live checks (CI-safe default).
 - Keep implementation in =src/=.
 - Keep unit tests in =tests/=.
 - Keep live API integration tests in =integration-tests/=.
