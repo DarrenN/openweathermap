@@ -120,6 +120,32 @@
                           :endpoint endpoint
                           :message (princ-to-string err)))))))
 
+(defun %fetch-raw (url endpoint)
+  (loop with attempts = 0
+        with max-attempts = (1+ *max-retries*)
+        do (incf attempts)
+           (handler-case
+               (multiple-value-bind (body status) (%http-get url)
+                 (cond
+                   ((or (null status) (<= 200 status 299))
+                    (return body))
+                   ((and (< attempts max-attempts) (%should-retry-status-p status))
+                    (sleep *retry-backoff-seconds*))
+                   (t
+                    (error 'api-request-error
+                           :status-code status
+                           :endpoint endpoint
+                           :message body))))
+             (api-request-error (err)
+               (error err))
+             (error (err)
+               (if (< attempts max-attempts)
+                   (sleep *retry-backoff-seconds*)
+                   (error 'api-network-error
+                          :status-code nil
+                          :endpoint endpoint
+                          :message (princ-to-string err)))))))
+
 (defun fetch-onecall (lat lon &rest query-params)
   "Fetch and decode /data/3.0/onecall response as a plist."
   (let ((url (apply #'build-onecall-url lat lon query-params)))

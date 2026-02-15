@@ -53,6 +53,22 @@ make spec-check
 - Keep API specs in =spec/= (one file per API family).
 - Update =CHANGELOG.md= for each session.
 
+** API Surface Conventions
+- Module layout by API family:
+  - =src/apis/current.lisp=
+  - =src/apis/forecast.lisp=
+  - =src/apis/geocoding.lisp=
+  - =src/apis/air-pollution.lisp=
+  - =src/apis/maps.lisp=
+  - =src/client.lisp= keeps shared request/retry/decode pipeline.
+- Function naming:
+  - =build-*= functions generate endpoint URLs.
+  - =make-*= functions return request metadata plist =(:method :get :url "...")=.
+  - =fetch-*= functions execute HTTP and return decoded plist responses (or raw tile payload for maps).
+- Response strategy:
+  - Baseline representation is plist decoded from JSON.
+  - Structured/typed response objects may be added later without breaking this baseline.
+
 ** Public API (Current Draft)
 Configure client settings:
 #+begin_src lisp

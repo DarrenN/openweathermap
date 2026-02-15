@@ -32,6 +32,14 @@ All notable changes to this project are tracked here.
   - `spec/air-pollution.yaml`
   - `spec/maps.yaml`
   - `spec/geocoding.yaml`
+- Phase B API surface design document: `plans/2026-02-15-phase-b-api-surface.md`.
+- API-family module stubs:
+  - `src/apis/current.lisp`
+  - `src/apis/forecast.lisp`
+  - `src/apis/geocoding.lisp`
+  - `src/apis/air-pollution.lisp`
+  - `src/apis/maps.lisp`
+- Expanded client configuration with `*maps-base-url*`.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -43,6 +51,9 @@ All notable changes to this project are tracked here.
 - Expanded `README.org` with public API usage examples for fetch/build functions and runtime configuration.
 - Renamed package and ASDF systems from `openweathermap-onecall*` to `openweathermap*` (breaking rename; no compatibility aliases).
 - Updated Makefile, tests, and source namespaces to the new `openweathermap` package identity.
+- Standardized multi-API public naming with `build-*`, `make-*`, and `fetch-*` functions across API families.
+- Updated system definition to load API-family modules from `src/apis/`.
+- Updated `README.org` with API surface conventions and module layout guidance.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

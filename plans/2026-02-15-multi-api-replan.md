@@ -19,10 +19,10 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Preserve backwards compatibility aliases temporarily (optional) or document explicit breaking change.
 
 ## Phase B: Unified API Surface Design
-- [ ] Define module layout by API family (e.g., `onecall`, `current`, `forecast`, `air-pollution`, `maps`, `geocoding`).
-- [ ] Standardize shared request pipeline (auth, retries, timeout, error mapping, decoding).
-- [ ] Define naming conventions for public functions across all APIs.
-- [ ] Decide response representation strategy (plist baseline now; optionally typed structures later).
+- [x] Define module layout by API family (e.g., `onecall`, `current`, `forecast`, `air-pollution`, `maps`, `geocoding`).
+- [x] Standardize shared request pipeline (auth, retries, timeout, error mapping, decoding).
+- [x] Define naming conventions for public functions across all APIs.
+- [x] Decide response representation strategy (plist baseline now; optionally typed structures later).
 
 ## Phase C: OpenAPI Specifications
 - [x] Keep and refine existing One Call OpenAPI file.
@@ -31,7 +31,7 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Add OpenAPI specs for Air Pollution API.
 - [x] Add OpenAPI specs for Weather Maps API.
 - [x] Add OpenAPI specs for Geocoding API.
-- [ ] Validate all specs with Redocly (`make spec-check`).
+- [x] Validate all specs with Redocly (`make spec-check`).
 
 ## Phase D: Incremental Client Implementation
 - [ ] Implement Current Weather client endpoints + tests.

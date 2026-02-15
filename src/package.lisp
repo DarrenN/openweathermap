@@ -2,6 +2,7 @@
   (:use :cl)
   (:export
    :*api-base-url*
+   :*maps-base-url*
    :*api-key*
    :*request-timeout-seconds*
    :*max-retries*
@@ -25,4 +26,31 @@
    :fetch-timemachine
    :fetch-day-summary
    :fetch-overview
+   :build-current-weather-url
+   :make-current-weather-request
+   :fetch-current-weather
+   :build-forecast-url
+   :make-forecast-request
+   :fetch-forecast
+   :build-geocoding-url
+   :make-geocoding-request
+   :fetch-geocoding
+   :build-reverse-geocoding-url
+   :make-reverse-geocoding-request
+   :fetch-reverse-geocoding
+   :build-zip-geocoding-url
+   :make-zip-geocoding-request
+   :fetch-zip-geocoding
+   :build-air-pollution-url
+   :make-air-pollution-request
+   :fetch-air-pollution
+   :build-air-pollution-forecast-url
+   :make-air-pollution-forecast-request
+   :fetch-air-pollution-forecast
+   :build-air-pollution-history-url
+   :make-air-pollution-history-request
+   :fetch-air-pollution-history
+   :build-weather-tile-url
+   :make-weather-tile-request
+   :fetch-weather-tile
    :ensure-api-key))
