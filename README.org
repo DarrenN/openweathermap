@@ -5,7 +5,7 @@
 Common Lisp client library for multiple OpenWeatherMap APIs: https://openweathermap.org/api
 
 ** ✨ AI Disclosure
-Large portions of the codebase are AI-assisted. For more information checkout `AGENTS.md` and `/plans`.
+Large portions of the codebase are AI-assisted. For more information checkout =AGENTS.md= and =/plans=.
 
 ** Status
 This repository is in early bootstrap.
