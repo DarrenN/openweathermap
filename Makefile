@@ -57,7 +57,7 @@ repl: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \
 		--eval '(require :asdf)' \
 		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
-		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))'
 
 tree:
 	@find . -maxdepth 2 -type f | sort

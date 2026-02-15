@@ -40,6 +40,11 @@ All notable changes to this project are tracked here.
   - `src/apis/air-pollution.lisp`
   - `src/apis/maps.lisp`
 - Expanded client configuration with `*maps-base-url*`.
+- Current Weather endpoint implementation with validated location selectors (`lat/lon`, `q`, `id`, `zip`) in `src/apis/current.lisp`.
+- New validation condition `invalid-parameters-error` for local request contract checks.
+- Dedicated Current Weather unit tests in `tests/current-test.lisp`.
+- Forecast endpoint implementation with validated location selectors (`lat/lon`, `q`, `id`, `zip`) in `src/apis/forecast.lisp`.
+- Dedicated Forecast unit tests in `tests/forecast-test.lisp`.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -54,6 +59,8 @@ All notable changes to this project are tracked here.
 - Standardized multi-API public naming with `build-*`, `make-*`, and `fetch-*` functions across API families.
 - Updated system definition to load API-family modules from `src/apis/`.
 - Updated `README.org` with API surface conventions and module layout guidance.
+- Updated unit test system definition to include `tests/current-test.lisp`.
+- Updated unit test system definition to include `tests/forecast-test.lisp`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

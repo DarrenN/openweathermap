@@ -81,6 +81,8 @@ Configure client settings:
 
 Fetch JSON-decoded responses (plist form):
 #+begin_src lisp
+(openweathermap:fetch-current-weather :q "London" :units :metric)
+(openweathermap:fetch-forecast :q "London" :units :metric :cnt 8)
 (openweathermap:fetch-onecall 35.0 139.0 :units :metric :lang "en")
 (openweathermap:fetch-timemachine 35.0 139.0 1700000000 :units :metric)
 (openweathermap:fetch-day-summary 35.0 139.0 "2026-02-15" :units :metric)
@@ -89,6 +91,8 @@ Fetch JSON-decoded responses (plist form):
 
 Build request URLs only (no network call):
 #+begin_src lisp
+(openweathermap:build-current-weather-url :lat 35.0 :lon 139.0 :units :metric)
+(openweathermap:build-forecast-url :lat 35.0 :lon 139.0 :units :metric :cnt 8)
 (openweathermap:build-onecall-url 35.0 139.0 :units :metric)
 (openweathermap:build-timemachine-url 35.0 139.0 1700000000)
 (openweathermap:build-day-summary-url 35.0 139.0 "2026-02-15")

@@ -9,11 +9,18 @@
                 :build-timemachine-url
                 :build-day-summary-url
                 :build-overview-url
+                :build-current-weather-url
+                :build-forecast-url
                 :make-client-weather-request
+                :make-current-weather-request
+                :make-forecast-request
                 :make-timemachine-request
                 :fetch-onecall
+                :fetch-current-weather
+                :fetch-forecast
                 :api-request-error
                 :api-network-error
+                :invalid-parameters-error
                 :with-http-get-function)
   (:export :run-tests))
 

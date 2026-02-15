@@ -14,6 +14,7 @@
    :api-request-error
    :api-network-error
    :api-response-parse-error
+   :invalid-parameters-error
    :build-onecall-url
    :build-timemachine-url
    :build-day-summary-url

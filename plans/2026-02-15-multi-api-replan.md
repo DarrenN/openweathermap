@@ -34,8 +34,8 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Validate all specs with Redocly (`make spec-check`).
 
 ## Phase D: Incremental Client Implementation
-- [ ] Implement Current Weather client endpoints + tests.
-- [ ] Implement Forecast client endpoints + tests.
+- [x] Implement Current Weather client endpoints + tests.
+- [x] Implement Forecast client endpoints + tests.
 - [ ] Implement Geocoding client endpoints + tests.
 - [ ] Implement Air Pollution endpoints + tests.
 - [ ] Implement Weather Maps endpoints + tests.

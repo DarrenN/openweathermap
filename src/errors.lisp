@@ -24,6 +24,12 @@
                      (api-request-error-endpoint condition)
                      (api-request-error-message condition)))))
 
+(define-condition invalid-parameters-error (error)
+  ((message :initarg :message :reader invalid-parameters-error-message))
+  (:report (lambda (condition stream)
+             (format stream "Invalid request parameters: ~A"
+                     (invalid-parameters-error-message condition)))))
+
 (define-condition missing-api-key-error (error)
   ()
   (:report (lambda (_ stream)

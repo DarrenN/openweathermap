@@ -7,6 +7,8 @@
   :components
   ((:file "tests/package")
    (:file "tests/config-test")
+   (:file "tests/current-test")
+   (:file "tests/forecast-test")
    (:file "tests/client-test")
    (:file "tests/test-runner"))
   :perform (asdf:test-op (op c)
