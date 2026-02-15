@@ -1,6 +1,6 @@
 * OpenWeatherMap API Client
 
-Common Lisp client library for multiple OpenWeatherMap APIs.
+Common Lisp client library for multiple OpenWeatherMap APIs: https://openweathermap.org/api
 
 ** Status
 This repository is in early bootstrap.

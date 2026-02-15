@@ -115,6 +115,13 @@ All notable changes to this project are tracked here.
   - `04-maps-tile-fetch.lisp`
   - shared loader: `examples/common-loader.lisp`
   - docs: `examples/README.org`
+- Added two additional examples:
+  - `05-all-apis.lisp` (single script touching all implemented API families)
+  - `06-repl-workflow.lisp` (REPL helper workflow for interactive development)
+- Updated examples docs to include interactive REPL loading via `sbcl --load`.
+- Refactored all `fetch-*` functions to execute their corresponding `make-*` request descriptors, ensuring a single request-construction path.
+- Added missing docstrings across internal and public functions in `src/client.lisp` and `src/apis/*.lisp`.
+- Updated `AGENTS.md` with current repository structure, canonical commands, and URL/query safety checklist for future agent handoff.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

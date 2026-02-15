@@ -1,11 +1,13 @@
 (in-package :openweathermap)
 
 (defun %compact-geocoding-plist (plist)
+  "Return PLIST with key/value pairs containing NIL values removed."
   (loop for (key value) on plist by #'cddr
         when value
           append (list key value)))
 
 (defun %non-empty-string-p (value)
+  "Return true when VALUE is a non-empty string."
   (and (stringp value)
        (> (length value) 0)))
 
@@ -21,12 +23,14 @@
                               :limit limit))))
 
 (defun make-geocoding-request (query &key limit)
+  "Build request descriptor plist for direct geocoding endpoint."
   (list :method :get
         :url (build-geocoding-url query :limit limit)))
 
 (defun fetch-geocoding (query &key limit)
   "Fetch and decode direct geocoding response as a plist."
-  (%fetch-json (build-geocoding-url query :limit limit) :geocoding-direct))
+  (%execute-json-request (make-geocoding-request query :limit limit)
+                         :geocoding-direct))
 
 (defun build-reverse-geocoding-url (lat lon &key limit)
   "Build URL for reverse geocoding endpoint."
@@ -41,12 +45,14 @@
                               :limit limit))))
 
 (defun make-reverse-geocoding-request (lat lon &key limit)
+  "Build request descriptor plist for reverse geocoding endpoint."
   (list :method :get
         :url (build-reverse-geocoding-url lat lon :limit limit)))
 
 (defun fetch-reverse-geocoding (lat lon &key limit)
   "Fetch and decode reverse geocoding response as a plist."
-  (%fetch-json (build-reverse-geocoding-url lat lon :limit limit) :geocoding-reverse))
+  (%execute-json-request (make-reverse-geocoding-request lat lon :limit limit)
+                         :geocoding-reverse))
 
 (defun build-zip-geocoding-url (zip &key country-code)
   "Build URL for zip geocoding endpoint."
@@ -60,9 +66,11 @@
                                       zip))))
 
 (defun make-zip-geocoding-request (zip &key country-code)
+  "Build request descriptor plist for ZIP geocoding endpoint."
   (list :method :get
         :url (build-zip-geocoding-url zip :country-code country-code)))
 
 (defun fetch-zip-geocoding (zip &key country-code)
   "Fetch and decode zip geocoding response as a plist."
-  (%fetch-json (build-zip-geocoding-url zip :country-code country-code) :geocoding-zip))
+  (%execute-json-request (make-zip-geocoding-request zip :country-code country-code)
+                         :geocoding-zip))

@@ -1,12 +1,14 @@
 (in-package :openweathermap)
 
 (defun %current-weather-location-valid-p (lat lon q id zip)
+  "Return true when any valid current-weather location selector is present."
   (or (and lat lon)
       q
       id
       zip))
 
 (defun %compact-plist (plist)
+  "Return PLIST with key/value pairs containing NIL values removed."
   (loop for (key value) on plist by #'cddr
         when value
           append (list key value)))
@@ -37,6 +39,7 @@ At least one location selector must be provided:
           :mode mode))))
 
 (defun make-current-weather-request (&key lat lon q id zip units lang mode)
+  "Build request descriptor plist for current weather endpoint."
   (list :method :get
         :url (build-current-weather-url
               :lat lat :lon lon :q q :id id :zip zip
@@ -44,7 +47,7 @@ At least one location selector must be provided:
 
 (defun fetch-current-weather (&key lat lon q id zip units lang mode)
   "Fetch and decode current weather response as a plist."
-  (%fetch-json (build-current-weather-url
-                :lat lat :lon lon :q q :id id :zip zip
-                :units units :lang lang :mode mode)
-               :current-weather))
+  (%execute-json-request (make-current-weather-request
+                          :lat lat :lon lon :q q :id id :zip zip
+                          :units units :lang lang :mode mode)
+                         :current-weather))

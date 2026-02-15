@@ -1,12 +1,14 @@
 (in-package :openweathermap)
 
 (defun %forecast-location-valid-p (lat lon q id zip)
+  "Return true when any valid forecast location selector is present."
   (or (and lat lon)
       q
       id
       zip))
 
 (defun %compact-forecast-plist (plist)
+  "Return PLIST with key/value pairs containing NIL values removed."
   (loop for (key value) on plist by #'cddr
         when value
           append (list key value)))
@@ -38,6 +40,7 @@ At least one location selector must be provided:
           :mode mode))))
 
 (defun make-forecast-request (&key lat lon q id zip units lang cnt mode)
+  "Build request descriptor plist for forecast endpoint."
   (list :method :get
         :url (build-forecast-url
               :lat lat :lon lon :q q :id id :zip zip
@@ -45,7 +48,7 @@ At least one location selector must be provided:
 
 (defun fetch-forecast (&key lat lon q id zip units lang cnt mode)
   "Fetch and decode forecast response as a plist."
-  (%fetch-json (build-forecast-url
-                :lat lat :lon lon :q q :id id :zip zip
-                :units units :lang lang :cnt cnt :mode mode)
-               :forecast))
+  (%execute-json-request (make-forecast-request
+                          :lat lat :lon lon :q q :id id :zip zip
+                          :units units :lang lang :cnt cnt :mode mode)
+                         :forecast))
