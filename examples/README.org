@@ -1,0 +1,42 @@
+* Examples
+
+These are minimal runnable examples for common workflows.
+
+** Prerequisites
+- Quicklisp available at =~/quicklisp/setup.lisp= (examples auto-load this if present)
+- Required dependencies installed (e.g., =dexador=, =jonathan=)
+
+** Run an example
+From repo root:
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/01-build-urls.lisp
+#+end_src
+
+For live fetch examples, set:
+#+begin_src sh
+export OPENWEATHER_API_KEY="your-key"
+#+end_src
+
+Then run:
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/02-current-weather-fetch.lisp
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/03-geocoding-fetch.lisp
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/04-maps-tile-fetch.lisp
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/05-all-apis.lisp
+#+end_src
+
+** REPL-oriented workflow example
+Load reusable REPL helpers:
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --load examples/06-repl-workflow.lisp
+#+end_src
+
+This script loads helper functions into package =OPENWEATHERMAP=:
+- =setup-from-env=
+- =quick-url-checks=
+- =quick-live-smoke=
+
+If you only want a one-shot load check (non-interactive), use:
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/06-repl-workflow.lisp
+#+end_src

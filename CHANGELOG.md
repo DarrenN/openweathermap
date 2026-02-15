@@ -107,6 +107,14 @@ All notable changes to this project are tracked here.
 - Fixed weather tile layer normalization for keyword inputs (e.g., `:temp_new` now serializes correctly instead of `emp_new`).
 - Added query-parameter conformance tests in `tests/query-param-conformance-test.lisp` to validate exact query key sets across generated URLs for One Call, Current, Forecast, Geocoding, Air Pollution, and Maps.
 - Expanded query-parameter conformance coverage to include required-vs-optional combinations for all implemented URL builders (One Call family, Current, Forecast, Geocoding direct/reverse/zip, Air Pollution current/forecast/history, and Maps).
+- Query-parameter conformance tests now assert percent-encoding of special characters in query values (spaces, commas, plus sign/colon timezone values, and forward slash in palette values).
+- Added starter runnable examples under `examples/`:
+  - `01-build-urls.lisp`
+  - `02-current-weather-fetch.lisp`
+  - `03-geocoding-fetch.lisp`
+  - `04-maps-tile-fetch.lisp`
+  - shared loader: `examples/common-loader.lisp`
+  - docs: `examples/README.org`
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.
