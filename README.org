@@ -1,0 +1,49 @@
+* OpenWeatherMap OneCall API Client
+
+Common Lisp client library for the OpenWeatherMap One Call 3.0 API.
+
+** Status
+This repository is in early bootstrap.
+
+** Goals
+- Idiomatic Common Lisp client interface.
+- Strong unit test suite.
+- Separate integration test suite for live API checks.
+- Project-local OpenAPI specification for One Call 3.0.
+
+** Quick Start
+*** Prerequisites
+- SBCL
+- ASDF
+- Quicklisp (for external dependencies such as FiveAM)
+
+*** Run unit tests
+#+begin_src sh
+make unit
+#+end_src
+
+*** Run integration tests
+Set your API key first:
+#+begin_src sh
+export OPENWEATHER_API_KEY="your-key"
+make integration
+#+end_src
+
+** Development Workflow
+- Use =make check= for local quality checks.
+- Keep implementation in =src/=.
+- Keep unit tests in =tests/=.
+- Keep live API integration tests in =integration-tests/=.
+- Keep plans in =plans/=.
+- Keep API spec in =spec/openapi.yaml=.
+- Update =CHANGELOG.md= for each session.
+
+** Current Project Layout
+#+begin_src text
+src/
+tests/
+integration-tests/
+spec/
+examples/
+plans/
+#+end_src
