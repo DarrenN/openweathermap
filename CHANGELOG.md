@@ -104,6 +104,9 @@ All notable changes to this project are tracked here.
   - `make repl` now loads `:openweathermap` and switches package context.
   - added `make repl-tests` and `make repl-integration` targets for test-focused sessions.
 - Request execution now treats only HTTP `200 OK` as success for fetch operations; any non-200 response signals request failure (including integration runs).
+- Fixed weather tile layer normalization for keyword inputs (e.g., `:temp_new` now serializes correctly instead of `emp_new`).
+- Added query-parameter conformance tests in `tests/query-param-conformance-test.lisp` to validate exact query key sets across generated URLs for One Call, Current, Forecast, Geocoding, Air Pollution, and Maps.
+- Expanded query-parameter conformance coverage to include required-vs-optional combinations for all implemented URL builders (One Call family, Current, Forecast, Geocoding direct/reverse/zip, Air Pollution current/forecast/history, and Maps).
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

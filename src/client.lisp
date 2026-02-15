@@ -6,7 +6,7 @@
 (defun %normalize-param-key (key)
   (string-downcase
    (etypecase key
-     (keyword (subseq (string key) 1))
+     (keyword (symbol-name key))
      (string key)
      (symbol (symbol-name key)))))
 
