@@ -18,10 +18,14 @@ All notable changes to this project are tracked here.
   - `/data/3.0/onecall/timemachine`
   - `/data/3.0/onecall/day_summary`
   - `/data/3.0/onecall/overview`
+- Node tooling manifest `package.json` with `@redocly/cli` dev dependency.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
 - Updated bootstrap plan to mark Phase 1 complete and Phase 2 draft/spec-capture items complete.
+- Switched `make spec-check` from `swagger-cli` to Redocly CLI (`redocly lint spec/openapi.yaml`).
+- Updated `README.org` prerequisites and setup instructions to include Redocly CLI installation via `npm install`.
+- Added `info.license` metadata to OpenAPI spec to satisfy Redocly recommended rules.
 
 ### Notes
-- `make spec-check` currently skips semantic validation because `swagger-cli` is not installed in this environment.
+- Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

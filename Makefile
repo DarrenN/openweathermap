@@ -1,6 +1,7 @@
 PROJECT := openweathermap-onecall
 UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
+REDOCLY := ./node_modules/.bin/redocly
 
 .PHONY: help test unit integration test-all check lint spec-check repl tree prepare-cache
 
@@ -12,7 +13,7 @@ help:
 	@echo "  make test-all       Run unit + integration"
 	@echo "  make check          Run lint + unit tests"
 	@echo "  make lint           Placeholder lint target"
-	@echo "  make spec-check     Validate OpenAPI spec if validator exists"
+	@echo "  make spec-check     Validate OpenAPI spec with Redocly CLI"
 	@echo "  make repl           Start SBCL REPL"
 	@echo "  make tree           Show top-level project tree"
 
@@ -45,10 +46,11 @@ check:
 	@$(MAKE) unit
 
 spec-check:
-	@if command -v swagger-cli >/dev/null 2>&1; then \
-		swagger-cli validate spec/openapi.yaml; \
+	@if [ -x $(REDOCLY) ]; then \
+		$(REDOCLY) lint spec/openapi.yaml; \
 	else \
-		echo "swagger-cli not found; skipped spec validation"; \
+		echo "Redocly CLI not found. Run: npm install"; \
+		exit 1; \
 	fi
 
 repl:

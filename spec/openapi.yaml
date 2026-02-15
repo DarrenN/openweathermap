@@ -2,6 +2,9 @@ openapi: 3.0.3
 info:
   title: OpenWeatherMap One Call 3.0 API (Draft)
   version: 0.2.0-draft
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
   description: |
     Draft OpenAPI specification for core OpenWeatherMap One Call 3.0 weather endpoints.
     Source: official OpenWeather One Call 3.0 documentation.

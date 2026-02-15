@@ -16,6 +16,16 @@ This repository is in early bootstrap.
 - SBCL
 - ASDF
 - Quicklisp (for external dependencies such as FiveAM)
+- Node.js (required for OpenAPI linting with Redocly CLI)
+  - Recommended: Node >= 20.19.0 (or >= 22.12.0)
+- npm
+
+*** Install development dependencies
+#+begin_src sh
+npm install
+#+end_src
+
+This installs =@redocly/cli= for OpenAPI spec validation.
 
 *** Run unit tests
 #+begin_src sh
@@ -27,6 +37,11 @@ Set your API key first:
 #+begin_src sh
 export OPENWEATHER_API_KEY="your-key"
 make integration
+#+end_src
+
+*** Validate OpenAPI spec
+#+begin_src sh
+make spec-check
 #+end_src
 
 ** Development Workflow

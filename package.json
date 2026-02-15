@@ -1,0 +1,12 @@
+{
+  "name": "openweathermap-onecall",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tooling for OpenWeatherMap OneCall API client",
+  "scripts": {
+    "spec:check": "redocly lint spec/openapi.yaml"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^2.18.1"
+  }
+}
