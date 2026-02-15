@@ -1,6 +1,6 @@
-(defpackage :openweathermap-onecall/tests
+(defpackage :openweathermap/tests
   (:use :cl :fiveam)
-  (:import-from :openweathermap-onecall
+  (:import-from :openweathermap
                 :*api-key*
                 :*max-retries*
                 :*retry-backoff-seconds*
@@ -17,9 +17,9 @@
                 :with-http-get-function)
   (:export :run-tests))
 
-(in-package :openweathermap-onecall/tests)
+(in-package :openweathermap/tests)
 
-(def-suite openweathermap-onecall-suite
-  :description "Unit tests for openweathermap-onecall")
+(def-suite openweathermap-suite
+  :description "Unit tests for openweathermap")
 
-(in-suite openweathermap-onecall-suite)
+(in-suite openweathermap-suite)

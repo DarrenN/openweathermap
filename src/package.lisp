@@ -1,4 +1,4 @@
-(defpackage :openweathermap-onecall
+(defpackage :openweathermap
   (:use :cl)
   (:export
    :*api-base-url*

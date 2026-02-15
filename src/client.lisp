@@ -1,4 +1,4 @@
-(in-package :openweathermap-onecall)
+(in-package :openweathermap)
 
 (defvar *http-get-function* nil
   "Function of (url timeout-seconds) returning two values: body and status code.")

@@ -1,4 +1,4 @@
-PROJECT := openweathermap-onecall
+PROJECT := openweathermap
 UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
 REDOCLY := ./node_modules/.bin/redocly
@@ -23,15 +23,15 @@ prepare-cache:
 unit test: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
 		--eval '(require :asdf)' \
-		--eval '(asdf:load-asd (truename "openweathermap-onecall.asd"))' \
-		--eval '(asdf:load-asd (truename "openweathermap-onecall-tests.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-tests.asd"))' \
 		--eval '(asdf:test-system :$(UNIT_SYSTEM))'
 
 integration: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl --non-interactive \
 		--eval '(require :asdf)' \
-		--eval '(asdf:load-asd (truename "openweathermap-onecall.asd"))' \
-		--eval '(asdf:load-asd (truename "openweathermap-onecall-integration-tests.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
 		--eval '(asdf:test-system :$(INTEGRATION_SYSTEM))'
 
 test-all:
@@ -47,7 +47,7 @@ check:
 
 spec-check:
 	@if [ -x $(REDOCLY) ]; then \
-		$(REDOCLY) lint spec/openapi.yaml; \
+		$(REDOCLY) lint spec/*.yaml; \
 	else \
 		echo "Redocly CLI not found. Run: npm install"; \
 		exit 1; \

@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: OpenWeatherMap Weather Maps API (Draft)
+  version: 0.1.0-draft
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Draft specification for OpenWeatherMap Weather Maps API.
+servers:
+  - url: https://tile.openweathermap.org
+paths: {}
+components: {}

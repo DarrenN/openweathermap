@@ -1,4 +1,4 @@
-(in-package :openweathermap-onecall)
+(in-package :openweathermap)
 
 (define-condition api-request-error (error)
   ((status-code :initarg :status-code :reader api-request-error-status-code)

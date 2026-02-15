@@ -1,2 +1,3 @@
 .cache/
 *.fasl
+node_modules/

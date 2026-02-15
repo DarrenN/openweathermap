@@ -1,5 +1,7 @@
 # Bootstrap Task Plan (2026-02-15)
 
+> Superseded by `plans/2026-02-15-multi-api-replan.md` after scope expanded to multiple OpenWeatherMap APIs and package rename to `openweathermap`.
+
 ## Scope
 Set up a production-quality Common Lisp client for OpenWeatherMap One Call 3.0 with strong testing, good developer ergonomics, and generated API surfaces from a project-local OpenAPI spec.
 

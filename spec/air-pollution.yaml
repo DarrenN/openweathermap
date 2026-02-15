@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: OpenWeatherMap Air Pollution API (Draft)
+  version: 0.1.0-draft
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Draft specification for OpenWeatherMap Air Pollution API.
+servers:
+  - url: https://api.openweathermap.org
+paths: {}
+components: {}
