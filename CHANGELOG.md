@@ -61,6 +61,16 @@ All notable changes to this project are tracked here.
   - raw tile fetcher (`fetch-weather-tile`)
   - validation for layer, z, x, y parameters.
 - Dedicated maps unit tests in `tests/maps-test.lisp`.
+- Integration test refactor for per-API live suites in `integration-tests/smoke-test.lisp`:
+  - onecall
+  - current
+  - forecast
+  - geocoding
+  - air-pollution
+  - maps
+- Integration helpers and suite runners:
+  - `integration-tests/helpers.lisp`
+  - expanded `integration-tests/test-runner.lisp` with per-suite runner functions.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -80,6 +90,23 @@ All notable changes to this project are tracked here.
 - Updated unit test system definition to include `tests/geocoding-test.lisp`.
 - Updated unit test system definition to include `tests/air-pollution-test.lisp`.
 - Updated unit test system definition to include `tests/maps-test.lisp`.
+- Updated integration ASDF definition to load helper modules.
+- Added Makefile integration smoke targets per API family:
+  - `integration-onecall`
+  - `integration-current`
+  - `integration-forecast`
+  - `integration-geocoding`
+  - `integration-air-pollution`
+  - `integration-maps`
+- Integration runs are now explicitly env-gated by `OPENWEATHERMAP_RUN_LIVE_TESTS` in addition to `OPENWEATHER_API_KEY`.
+- Integration suite runner now prints detailed FiveAM failure diagnostics (`explain!`) before raising an error, so live test failures are debuggable from CLI logs.
+- Improved REPL startup workflow in `Makefile`:
+  - `make repl` now loads `:openweathermap` and switches package context.
+  - added `make repl-tests` and `make repl-integration` targets for test-focused sessions.
+- Request execution now treats only HTTP `200 OK` as success for fetch operations; any non-200 response signals request failure (including integration runs).
+- Fixed weather tile layer normalization for keyword inputs (e.g., `:temp_new` now serializes correctly instead of `emp_new`).
+- Added query-parameter conformance tests in `tests/query-param-conformance-test.lisp` to validate exact query key sets across generated URLs for One Call, Current, Forecast, Geocoding, Air Pollution, and Maps.
+- Expanded query-parameter conformance coverage to include required-vs-optional combinations for all implemented URL builders (One Call family, Current, Forecast, Geocoding direct/reverse/zip, Air Pollution current/forecast/history, and Maps).
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

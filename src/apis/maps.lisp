@@ -3,7 +3,7 @@
 (defun %normalize-layer-name (layer)
   (let ((name (string-downcase
                (etypecase layer
-                 (keyword (subseq (string layer) 1))
+                 (keyword (symbol-name layer))
                  (string layer)
                  (symbol (symbol-name layer))))))
     (unless (> (length name) 0)

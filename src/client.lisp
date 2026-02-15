@@ -6,7 +6,7 @@
 (defun %normalize-param-key (key)
   (string-downcase
    (etypecase key
-     (keyword (subseq (string key) 1))
+     (keyword (symbol-name key))
      (string key)
      (symbol (symbol-name key)))))
 
@@ -101,7 +101,7 @@
            (handler-case
                (multiple-value-bind (body status) (%http-get url)
                  (cond
-                   ((or (null status) (<= 200 status 299))
+                   ((and status (= status 200))
                     (return (%parse-response-body body endpoint)))
                    ((and (< attempts max-attempts) (%should-retry-status-p status))
                     (sleep *retry-backoff-seconds*))
@@ -127,7 +127,7 @@
            (handler-case
                (multiple-value-bind (body status) (%http-get url)
                  (cond
-                   ((or (null status) (<= 200 status 299))
+                   ((and status (= status 200))
                     (return body))
                    ((and (< attempts max-attempts) (%should-retry-status-p status))
                     (sleep *retry-backoff-seconds*))
