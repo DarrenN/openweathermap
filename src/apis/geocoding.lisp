@@ -1,10 +1,24 @@
 (in-package :openweathermap)
 
+(defun %compact-geocoding-plist (plist)
+  (loop for (key value) on plist by #'cddr
+        when value
+          append (list key value)))
+
+(defun %non-empty-string-p (value)
+  (and (stringp value)
+       (> (length value) 0)))
+
 (defun build-geocoding-url (query &key limit)
   "Build URL for direct geocoding endpoint."
+  (unless (%non-empty-string-p query)
+    (error 'invalid-parameters-error
+           :message "Direct geocoding requires a non-empty query string."))
   (%build-endpoint-url "/geo/1.0/direct"
-                       (list :q query)
-                       (when limit (list :limit limit))))
+                       '()
+                       (%compact-geocoding-plist
+                        (list :q query
+                              :limit limit))))
 
 (defun make-geocoding-request (query &key limit)
   (list :method :get
@@ -16,9 +30,15 @@
 
 (defun build-reverse-geocoding-url (lat lon &key limit)
   "Build URL for reverse geocoding endpoint."
+  (unless (and lat lon)
+    (error 'invalid-parameters-error
+           :message "Reverse geocoding requires both lat and lon."))
   (%build-endpoint-url "/geo/1.0/reverse"
-                       (list :lat lat :lon lon)
-                       (when limit (list :limit limit))))
+                       '()
+                       (%compact-geocoding-plist
+                        (list :lat lat
+                              :lon lon
+                              :limit limit))))
 
 (defun make-reverse-geocoding-request (lat lon &key limit)
   (list :method :get
@@ -30,11 +50,14 @@
 
 (defun build-zip-geocoding-url (zip &key country-code)
   "Build URL for zip geocoding endpoint."
+  (unless (%non-empty-string-p zip)
+    (error 'invalid-parameters-error
+           :message "ZIP geocoding requires a non-empty zip code."))
   (%build-endpoint-url "/geo/1.0/zip"
-                       (list :zip (if country-code
+                       '()
+                       (list :zip (if (%non-empty-string-p country-code)
                                       (format nil "~A,~A" zip country-code)
-                                      zip))
-                       '()))
+                                      zip))))
 
 (defun make-zip-geocoding-request (zip &key country-code)
   (list :method :get

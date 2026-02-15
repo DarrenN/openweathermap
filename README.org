@@ -83,6 +83,9 @@ Fetch JSON-decoded responses (plist form):
 #+begin_src lisp
 (openweathermap:fetch-current-weather :q "London" :units :metric)
 (openweathermap:fetch-forecast :q "London" :units :metric :cnt 8)
+(openweathermap:fetch-geocoding "London" :limit 5)
+(openweathermap:fetch-reverse-geocoding 35.0 139.0 :limit 1)
+(openweathermap:fetch-zip-geocoding "94040" :country-code "US")
 (openweathermap:fetch-onecall 35.0 139.0 :units :metric :lang "en")
 (openweathermap:fetch-timemachine 35.0 139.0 1700000000 :units :metric)
 (openweathermap:fetch-day-summary 35.0 139.0 "2026-02-15" :units :metric)
@@ -93,6 +96,9 @@ Build request URLs only (no network call):
 #+begin_src lisp
 (openweathermap:build-current-weather-url :lat 35.0 :lon 139.0 :units :metric)
 (openweathermap:build-forecast-url :lat 35.0 :lon 139.0 :units :metric :cnt 8)
+(openweathermap:build-geocoding-url "London" :limit 5)
+(openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 1)
+(openweathermap:build-zip-geocoding-url "94040" :country-code "US")
 (openweathermap:build-onecall-url 35.0 139.0 :units :metric)
 (openweathermap:build-timemachine-url 35.0 139.0 1700000000)
 (openweathermap:build-day-summary-url 35.0 139.0 "2026-02-15")

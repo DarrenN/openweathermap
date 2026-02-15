@@ -11,13 +11,20 @@
                 :build-overview-url
                 :build-current-weather-url
                 :build-forecast-url
+                :build-geocoding-url
+                :build-reverse-geocoding-url
+                :build-zip-geocoding-url
                 :make-client-weather-request
                 :make-current-weather-request
                 :make-forecast-request
+                :make-geocoding-request
                 :make-timemachine-request
                 :fetch-onecall
                 :fetch-current-weather
                 :fetch-forecast
+                :fetch-geocoding
+                :fetch-reverse-geocoding
+                :fetch-zip-geocoding
                 :api-request-error
                 :api-network-error
                 :invalid-parameters-error

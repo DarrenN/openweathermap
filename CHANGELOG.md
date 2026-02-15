@@ -45,6 +45,11 @@ All notable changes to this project are tracked here.
 - Dedicated Current Weather unit tests in `tests/current-test.lisp`.
 - Forecast endpoint implementation with validated location selectors (`lat/lon`, `q`, `id`, `zip`) in `src/apis/forecast.lisp`.
 - Dedicated Forecast unit tests in `tests/forecast-test.lisp`.
+- Geocoding endpoint implementation in `src/apis/geocoding.lisp`:
+  - direct geocoding (`/geo/1.0/direct`)
+  - reverse geocoding (`/geo/1.0/reverse`)
+  - ZIP geocoding (`/geo/1.0/zip`)
+- Dedicated geocoding unit tests in `tests/geocoding-test.lisp`.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -61,6 +66,7 @@ All notable changes to this project are tracked here.
 - Updated `README.org` with API surface conventions and module layout guidance.
 - Updated unit test system definition to include `tests/current-test.lisp`.
 - Updated unit test system definition to include `tests/forecast-test.lisp`.
+- Updated unit test system definition to include `tests/geocoding-test.lisp`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.
