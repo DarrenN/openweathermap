@@ -3,7 +3,7 @@ UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
 REDOCLY := ./node_modules/.bin/redocly
 
-.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check repl tree prepare-cache
+.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check repl repl-tests repl-integration tree prepare-cache
 
 help:
 	@echo "Available targets:"
@@ -21,6 +21,8 @@ help:
 	@echo "  make lint           Placeholder lint target"
 	@echo "  make spec-check     Validate OpenAPI spec with Redocly CLI"
 	@echo "  make repl           Start SBCL REPL"
+	@echo "  make repl-tests     Start SBCL REPL with unit test system loaded"
+	@echo "  make repl-integration Start SBCL REPL with integration test system loaded"
 	@echo "  make tree           Show top-level project tree"
 
 prepare-cache:
@@ -111,7 +113,24 @@ repl: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \
 		--eval '(require :asdf)' \
 		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
-		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))'
+		--eval '(asdf:load-system :openweathermap)' \
+		--eval '(in-package :openweathermap)'
+
+repl-tests: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-tests)' \
+		--eval '(in-package :openweathermap/tests)'
+
+repl-integration: prepare-cache
+	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \
+		--eval '(require :asdf)' \
+		--eval '(asdf:load-asd (truename "openweathermap.asd"))' \
+		--eval '(asdf:load-asd (truename "openweathermap-integration-tests.asd"))' \
+		--eval '(asdf:load-system :openweathermap-integration-tests)' \
+		--eval '(in-package :openweathermap/integration-tests)'
 
 tree:
 	@find . -maxdepth 2 -type f | sort

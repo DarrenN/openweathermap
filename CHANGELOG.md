@@ -99,6 +99,11 @@ All notable changes to this project are tracked here.
   - `integration-air-pollution`
   - `integration-maps`
 - Integration runs are now explicitly env-gated by `OPENWEATHERMAP_RUN_LIVE_TESTS` in addition to `OPENWEATHER_API_KEY`.
+- Integration suite runner now prints detailed FiveAM failure diagnostics (`explain!`) before raising an error, so live test failures are debuggable from CLI logs.
+- Improved REPL startup workflow in `Makefile`:
+  - `make repl` now loads `:openweathermap` and switches package context.
+  - added `make repl-tests` and `make repl-integration` targets for test-focused sessions.
+- Request execution now treats only HTTP `200 OK` as success for fetch operations; any non-200 response signals request failure (including integration runs).
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

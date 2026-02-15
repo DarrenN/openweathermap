@@ -3,7 +3,9 @@
 (defun %run-suite-or-fail (suite-name failure-message)
   (let ((result (run suite-name)))
     (unless (results-status result)
-      (error failure-message))
+      (format *error-output* "~&~A~%Detailed failure report follows:~%" failure-message)
+      (explain! result)
+      (error "~A (see detailed failure report above)." failure-message))
     result))
 
 (defun run-integration-tests ()
