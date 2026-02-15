@@ -17,12 +17,14 @@
                 :build-air-pollution-url
                 :build-air-pollution-forecast-url
                 :build-air-pollution-history-url
+                :build-weather-tile-url
                 :make-client-weather-request
                 :make-current-weather-request
                 :make-forecast-request
                 :make-geocoding-request
                 :make-air-pollution-request
                 :make-air-pollution-history-request
+                :make-weather-tile-request
                 :make-timemachine-request
                 :fetch-onecall
                 :fetch-current-weather
@@ -33,6 +35,7 @@
                 :fetch-air-pollution
                 :fetch-air-pollution-forecast
                 :fetch-air-pollution-history
+                :fetch-weather-tile
                 :api-request-error
                 :api-network-error
                 :invalid-parameters-error

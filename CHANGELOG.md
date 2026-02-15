@@ -55,6 +55,12 @@ All notable changes to this project are tracked here.
   - air pollution forecast (`/data/2.5/air_pollution/forecast`)
   - air pollution history (`/data/2.5/air_pollution/history`)
 - Dedicated air pollution unit tests in `tests/air-pollution-test.lisp`.
+- Weather Maps endpoint implementation in `src/apis/maps.lisp`:
+  - tile URL builder (`build-weather-tile-url`)
+  - request metadata builder (`make-weather-tile-request`)
+  - raw tile fetcher (`fetch-weather-tile`)
+  - validation for layer, z, x, y parameters.
+- Dedicated maps unit tests in `tests/maps-test.lisp`.
 
 ### Changed
 - Replaced placeholder OpenAPI file with reusable components for parameters, shared weather schemas, and standard error responses.
@@ -73,6 +79,7 @@ All notable changes to this project are tracked here.
 - Updated unit test system definition to include `tests/forecast-test.lisp`.
 - Updated unit test system definition to include `tests/geocoding-test.lisp`.
 - Updated unit test system definition to include `tests/air-pollution-test.lisp`.
+- Updated unit test system definition to include `tests/maps-test.lisp`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

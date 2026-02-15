@@ -38,8 +38,8 @@ Move from a One Call-only client to a broader OpenWeatherMap client that support
 - [x] Implement Forecast client endpoints + tests.
 - [x] Implement Geocoding client endpoints + tests.
 - [x] Implement Air Pollution endpoints + tests.
-- [ ] Implement Weather Maps endpoints + tests.
-- [ ] Integrate One Call module under the renamed package.
+- [x] Implement Weather Maps endpoints + tests.
+- [x] Integrate One Call module under the renamed package.
 
 ## Phase E: Testing and Integration Quality
 - [ ] Expand unit test suite per endpoint family.
