@@ -2,12 +2,155 @@
 openapi: 3.0.3
 info:
   title: OpenWeatherMap Weather Maps API (Draft)
-  version: 0.1.0-draft
+  version: 0.2.0-draft
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  description: Draft specification for OpenWeatherMap Weather Maps API.
+  description: |
+    Draft specification for OpenWeatherMap Weather Maps API tile endpoint.
+    Source: official OpenWeather Weather Maps documentation.
 servers:
   - url: https://tile.openweathermap.org
-paths: {}
-components: {}
+    description: OpenWeather tile server
+security:
+  - AppIdQueryAuth: []
+paths:
+  /map/{layer}/{z}/{x}/{y}.png:
+    get:
+      operationId: getWeatherTile
+      summary: Weather map tile
+      description: Returns a PNG tile for the selected weather layer.
+      parameters:
+        - $ref: '#/components/parameters/Layer'
+        - $ref: '#/components/parameters/Z'
+        - $ref: '#/components/parameters/X'
+        - $ref: '#/components/parameters/Y'
+        - $ref: '#/components/parameters/Opacity'
+        - $ref: '#/components/parameters/Palette'
+      responses:
+        '200':
+          description: Weather tile returned successfully.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    AppIdQueryAuth:
+      type: apiKey
+      in: query
+      name: appid
+
+  parameters:
+    Layer:
+      name: layer
+      in: path
+      required: true
+      description: |
+        Weather map layer code.
+      schema:
+        type: string
+        enum:
+          - clouds_new
+          - precipitation_new
+          - pressure_new
+          - temp_new
+          - temperature_new
+          - wind_new
+    Z:
+      name: z
+      in: path
+      required: true
+      description: Tile zoom level.
+      schema:
+        type: integer
+        minimum: 0
+    X:
+      name: x
+      in: path
+      required: true
+      description: Tile x coordinate.
+      schema:
+        type: integer
+        minimum: 0
+    Y:
+      name: y
+      in: path
+      required: true
+      description: Tile y coordinate.
+      schema:
+        type: integer
+        minimum: 0
+    Opacity:
+      name: opacity
+      in: query
+      required: false
+      description: Optional tile layer opacity from 0 to 1.
+      schema:
+        type: number
+        format: double
+        minimum: 0
+        maximum: 1
+    Palette:
+      name: palette
+      in: query
+      required: false
+      description: Optional palette selection parameter.
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Invalid tile request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Tile or layer not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Request quota exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Server-side error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [message]
+      properties:
+        cod:
+          oneOf:
+            - type: integer
+            - type: string
+        message:
+          type: string

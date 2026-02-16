@@ -1,12 +1,24 @@
 ;; SPDX-License-Identifier: MIT
 (in-package :openweathermap)
 
-(defun %current-weather-location-valid-p (lat lon q id zip)
-  "Return true when any valid current-weather location selector is present."
-  (or (and lat lon)
-      q
-      id
-      zip))
+(defun %current-selector-provided-p (value)
+  "Return true when VALUE should count as a provided selector."
+  (not (null value)))
+
+(defun %ensure-current-weather-location-selector (lat lon q id zip)
+  "Validate current-weather location selectors for mutual exclusivity."
+  (let ((has-lat (%current-selector-provided-p lat))
+        (has-lon (%current-selector-provided-p lon)))
+    (unless (eq has-lat has-lon)
+      (error 'invalid-parameters-error
+             :message "Current weather coordinates require both lat and lon together."))
+    (let ((selector-count (+ (if (and has-lat has-lon) 1 0)
+                             (if (%current-selector-provided-p q) 1 0)
+                             (if (%current-selector-provided-p id) 1 0)
+                             (if (%current-selector-provided-p zip) 1 0))))
+      (unless (= selector-count 1)
+        (error 'invalid-parameters-error
+               :message "Provide exactly one current weather location selector: lat/lon, q, id, or zip.")))))
 
 (defun %compact-plist (plist)
   "Return PLIST with key/value pairs containing NIL values removed."
@@ -17,15 +29,13 @@
 (defun build-current-weather-url (&key lat lon q id zip units lang mode)
   "Build URL for /data/2.5/weather endpoint.
 
-At least one location selector must be provided:
+Exactly one location selector must be provided:
 - lat/lon pair
 - q (city name)
 - id (city id)
 - zip
 "
-  (unless (%current-weather-location-valid-p lat lon q id zip)
-    (error 'invalid-parameters-error
-           :message "Provide location via lat/lon, q, id, or zip."))
+  (%ensure-current-weather-location-selector lat lon q id zip)
   (%build-endpoint-url
    "/data/2.5/weather"
    '()
@@ -48,6 +58,7 @@ At least one location selector must be provided:
 
 (defun fetch-current-weather (&key lat lon q id zip units lang mode)
   "Fetch and decode current weather response as a plist."
+  (%ensure-json-mode-for-fetch mode "Current weather")
   (%execute-json-request (make-current-weather-request
                           :lat lat :lon lon :q q :id id :zip zip
                           :units units :lang lang :mode mode)

@@ -22,6 +22,20 @@
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-current-weather-url :units :metric))))
 
+(test build-current-weather-url-requires-lat-lon-pair
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-current-weather-url :lat 35.0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-current-weather-url :lon 139.0))))
+
+(test build-current-weather-url-requires-exactly-one-selector
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-current-weather-url :q "Tokyo" :id 1850147))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-current-weather-url :lat 35.0 :lon 139.0 :q "Tokyo"))))
+
 (test make-current-weather-request-returns-shape
   (let ((openweathermap:*api-key* "test-key"))
     (let ((request (openweathermap:make-current-weather-request :id 524901 :lang "en")))
@@ -38,3 +52,8 @@
         (is (listp result))
         (is (or (equal "Tokyo" (getf result :name))
                 (equal "Tokyo" (getf result :|name|))))))))
+
+(test fetch-current-weather-rejects-non-json-mode
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:fetch-current-weather :q "Tokyo" :mode "xml"))))

@@ -23,6 +23,31 @@
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-forecast-url :units :metric))))
 
+(test build-forecast-url-requires-lat-lon-pair
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :lat 35.0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :lon 139.0))))
+
+(test build-forecast-url-requires-exactly-one-selector
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :q "Tokyo" :id 1850147))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :lat 35.0 :lon 139.0 :q "Tokyo"))))
+
+(test build-forecast-url-validates-cnt-range
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :q "Tokyo" :cnt 0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :q "Tokyo" :cnt 41))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-forecast-url :q "Tokyo" :cnt 2.5))
+    (let ((url (openweathermap:build-forecast-url :q "Tokyo" :cnt 40)))
+      (is (search "cnt=40" url)))))
+
 (test make-forecast-request-returns-shape
   (let ((openweathermap:*api-key* "test-key"))
     (let ((request (openweathermap:make-forecast-request :zip "10001,US" :mode "json")))
@@ -40,3 +65,8 @@
         (is (listp result))
         (is (or (equal 40 (getf result :cnt))
                 (equal 40 (getf result :|cnt|))))))))
+
+(test fetch-forecast-rejects-non-json-mode
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:fetch-forecast :q "Tokyo" :mode :xml))))

@@ -12,11 +12,20 @@
   (and (stringp value)
        (> (length value) 0)))
 
+(defun %ensure-geocoding-limit (limit endpoint-name)
+  "Validate optional LIMIT is an integer in the range 1..5."
+  (when limit
+    (unless (and (integerp limit) (<= 1 limit 5))
+      (error 'invalid-parameters-error
+             :message (format nil "~A limit must be an integer between 1 and 5."
+                              endpoint-name)))))
+
 (defun build-geocoding-url (query &key limit)
   "Build URL for direct geocoding endpoint."
   (unless (%non-empty-string-p query)
     (error 'invalid-parameters-error
            :message "Direct geocoding requires a non-empty query string."))
+  (%ensure-geocoding-limit limit "Direct geocoding")
   (%build-endpoint-url "/geo/1.0/direct"
                        '()
                        (%compact-geocoding-plist
@@ -38,6 +47,7 @@
   (unless (and lat lon)
     (error 'invalid-parameters-error
            :message "Reverse geocoding requires both lat and lon."))
+  (%ensure-geocoding-limit limit "Reverse geocoding")
   (%build-endpoint-url "/geo/1.0/reverse"
                        '()
                        (%compact-geocoding-plist

@@ -158,6 +158,24 @@ All notable changes to this project are tracked here.
   - switched from static in-script tables to parse-driven extraction from upstream weather-condition HTML
   - added strict source validation and sentinel checks before accepting a source
   - improved per-source error reporting when parsing fails
+- Expanded OpenAPI specs from stubs to concrete path/parameter/response/schema definitions for:
+  - `spec/current.yaml`
+  - `spec/forecast.yaml`
+  - `spec/geocoding.yaml`
+  - `spec/air-pollution.yaml`
+  - `spec/maps.yaml`
+- Tightened current/forecast fetch mode behavior:
+  - `fetch-current-weather` and `fetch-forecast` now reject non-JSON `mode` values with `invalid-parameters-error`.
+  - `build-*` and `make-*` helpers still allow building non-JSON mode requests.
+- Added strict weather maps layer allowlist validation in `build-weather-tile-url` based on documented layer set.
+- Added/updated unit tests for non-JSON mode rejection and invalid map layer rejection.
+- Tightened location-selector validation for current/forecast URL builders:
+  - exactly one selector must be provided (`lat/lon` pair, `q`, `id`, or `zip`)
+  - partial coordinates (`lat` without `lon`, or `lon` without `lat`) are now rejected locally.
+- Added parameter bound validation:
+  - forecast `:cnt` must be an integer in `1..40`
+  - geocoding and reverse-geocoding `:limit` must be an integer in `1..5`.
+- Expanded unit tests for selector exclusivity/coordinate pairing and `:cnt`/`:limit` bounds.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

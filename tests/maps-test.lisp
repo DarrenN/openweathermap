@@ -14,6 +14,8 @@
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-weather-tile-url "" 1 1 1))
     (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-weather-tile-url :unknown_layer 1 1 1))
+    (signals openweathermap:invalid-parameters-error
       (openweathermap:build-weather-tile-url :temp_new -1 1 1))
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-weather-tile-url :temp_new 1 -1 1))

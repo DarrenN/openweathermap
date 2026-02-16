@@ -1,6 +1,15 @@
 ;; SPDX-License-Identifier: MIT
 (in-package :openweathermap)
 
+(defparameter *supported-weather-map-layers*
+  '("clouds_new"
+    "precipitation_new"
+    "pressure_new"
+    "temp_new"
+    "temperature_new"
+    "wind_new")
+  "Documented OpenWeather weather map layers supported by this client.")
+
 (defun %normalize-layer-name (layer)
   "Normalize tile LAYER to lowercase string form and validate non-empty."
   (let ((name (string-downcase
@@ -11,6 +20,11 @@
     (unless (> (length name) 0)
       (error 'invalid-parameters-error
              :message "Weather tile layer must be a non-empty string/symbol."))
+    (unless (member name *supported-weather-map-layers* :test #'string=)
+      (error 'invalid-parameters-error
+             :message (format nil "Unsupported weather tile layer '~A'. Supported layers: ~{~A~^, ~}."
+                              name
+                              *supported-weather-map-layers*)))
     name))
 
 (defun %ensure-non-negative-integer (value field-name)
