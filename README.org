@@ -178,6 +178,11 @@ Resolution behavior:
 - Canonical mapping is used as fallback and for metadata like =:icon-day= / =:icon-night=.
 - Unknown condition IDs do not error; result marks =:unknown-condition-p= as true.
 
+Runnable helper demos:
+- =examples/07-weather-condition-helpers.lisp= (offline)
+- =examples/08-current-weather-enrichment.lisp= (live current-weather enrichment)
+- See =examples/README.org= for commands.
+
 ** Parameter Reference
 This client accepts Common Lisp values and serializes them into query params.
 

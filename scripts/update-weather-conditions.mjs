@@ -4,6 +4,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { load as loadHtml } from 'cheerio';
 
 const ROOT = process.cwd();
 const DATA_PATH = path.join(ROOT, 'data', 'weather-conditions.json');
@@ -15,92 +16,17 @@ const SOURCE_URLS = [
   'https://docs.openweather.co.uk/weather-conditions'
 ];
 
-const ICONS = [
-  { key: '01', day: '01d', night: '01n', description: 'clear sky' },
-  { key: '02', day: '02d', night: '02n', description: 'few clouds' },
-  { key: '03', day: '03d', night: '03n', description: 'scattered clouds' },
-  { key: '04', day: '04d', night: '04n', description: 'broken clouds' },
-  { key: '09', day: '09d', night: '09n', description: 'shower rain' },
-  { key: '10', day: '10d', night: '10n', description: 'rain' },
-  { key: '11', day: '11d', night: '11n', description: 'thunderstorm' },
-  { key: '13', day: '13d', night: '13n', description: 'snow' },
-  { key: '50', day: '50d', night: '50n', description: 'mist' }
-];
-
-const CONDITIONS = [
-  { id: 200, group: 'Thunderstorm', description: 'thunderstorm with light rain', icon: '11d' },
-  { id: 201, group: 'Thunderstorm', description: 'thunderstorm with rain', icon: '11d' },
-  { id: 202, group: 'Thunderstorm', description: 'thunderstorm with heavy rain', icon: '11d' },
-  { id: 210, group: 'Thunderstorm', description: 'light thunderstorm', icon: '11d' },
-  { id: 211, group: 'Thunderstorm', description: 'thunderstorm', icon: '11d' },
-  { id: 212, group: 'Thunderstorm', description: 'heavy thunderstorm', icon: '11d' },
-  { id: 221, group: 'Thunderstorm', description: 'ragged thunderstorm', icon: '11d' },
-  { id: 230, group: 'Thunderstorm', description: 'thunderstorm with light drizzle', icon: '11d' },
-  { id: 231, group: 'Thunderstorm', description: 'thunderstorm with drizzle', icon: '11d' },
-  { id: 232, group: 'Thunderstorm', description: 'thunderstorm with heavy drizzle', icon: '11d' },
-
-  { id: 300, group: 'Drizzle', description: 'light intensity drizzle', icon: '09d' },
-  { id: 301, group: 'Drizzle', description: 'drizzle', icon: '09d' },
-  { id: 302, group: 'Drizzle', description: 'heavy intensity drizzle', icon: '09d' },
-  { id: 310, group: 'Drizzle', description: 'light intensity drizzle rain', icon: '09d' },
-  { id: 311, group: 'Drizzle', description: 'drizzle rain', icon: '09d' },
-  { id: 312, group: 'Drizzle', description: 'heavy intensity drizzle rain', icon: '09d' },
-  { id: 313, group: 'Drizzle', description: 'shower rain and drizzle', icon: '09d' },
-  { id: 314, group: 'Drizzle', description: 'heavy shower rain and drizzle', icon: '09d' },
-  { id: 321, group: 'Drizzle', description: 'shower drizzle', icon: '09d' },
-
-  { id: 500, group: 'Rain', description: 'light rain', icon: '10d' },
-  { id: 501, group: 'Rain', description: 'moderate rain', icon: '10d' },
-  { id: 502, group: 'Rain', description: 'heavy intensity rain', icon: '10d' },
-  { id: 503, group: 'Rain', description: 'very heavy rain', icon: '10d' },
-  { id: 504, group: 'Rain', description: 'extreme rain', icon: '10d' },
-  { id: 511, group: 'Rain', description: 'freezing rain', icon: '13d' },
-  { id: 520, group: 'Rain', description: 'light intensity shower rain', icon: '09d' },
-  { id: 521, group: 'Rain', description: 'shower rain', icon: '09d' },
-  { id: 522, group: 'Rain', description: 'heavy intensity shower rain', icon: '09d' },
-  { id: 531, group: 'Rain', description: 'ragged shower rain', icon: '09d' },
-
-  { id: 600, group: 'Snow', description: 'light snow', icon: '13d' },
-  { id: 601, group: 'Snow', description: 'snow', icon: '13d' },
-  { id: 602, group: 'Snow', description: 'heavy snow', icon: '13d' },
-  { id: 611, group: 'Snow', description: 'sleet', icon: '13d' },
-  { id: 612, group: 'Snow', description: 'light shower sleet', icon: '13d' },
-  { id: 613, group: 'Snow', description: 'shower sleet', icon: '13d' },
-  { id: 615, group: 'Snow', description: 'light rain and snow', icon: '13d' },
-  { id: 616, group: 'Snow', description: 'rain and snow', icon: '13d' },
-  { id: 620, group: 'Snow', description: 'light shower snow', icon: '13d' },
-  { id: 621, group: 'Snow', description: 'shower snow', icon: '13d' },
-  { id: 622, group: 'Snow', description: 'heavy shower snow', icon: '13d' },
-
-  { id: 701, group: 'Atmosphere', description: 'mist', icon: '50d' },
-  { id: 711, group: 'Atmosphere', description: 'smoke', icon: '50d' },
-  { id: 721, group: 'Atmosphere', description: 'haze', icon: '50d' },
-  { id: 731, group: 'Atmosphere', description: 'sand/dust whirls', icon: '50d' },
-  { id: 741, group: 'Atmosphere', description: 'fog', icon: '50d' },
-  { id: 751, group: 'Atmosphere', description: 'sand', icon: '50d' },
-  { id: 761, group: 'Atmosphere', description: 'dust', icon: '50d' },
-  { id: 762, group: 'Atmosphere', description: 'volcanic ash', icon: '50d' },
-  { id: 771, group: 'Atmosphere', description: 'squalls', icon: '50d' },
-  { id: 781, group: 'Atmosphere', description: 'tornado', icon: '50d' },
-
-  { id: 800, group: 'Clear', description: 'clear sky', icon: '01d' },
-
-  { id: 801, group: 'Clouds', description: 'few clouds: 11-25%', icon: '02d' },
-  { id: 802, group: 'Clouds', description: 'scattered clouds: 25-50%', icon: '03d' },
-  { id: 803, group: 'Clouds', description: 'broken clouds: 51-84%', icon: '04d' },
-  { id: 804, group: 'Clouds', description: 'overcast clouds: 85-100%', icon: '04d' }
-];
-
 const SCHEMA = {
   $schema: 'https://json-schema.org/draft/2020-12/schema',
   $id: 'https://github.com/yuzu/openweathermap/schemas/weather-conditions.schema.json',
   title: 'OpenWeather condition/icon mapping dataset',
   type: 'object',
-  required: ['schema_version', 'generated_at', 'source_urls', 'icon_base_url', 'icon_sets', 'conditions'],
+  required: ['schema_version', 'generated_at', 'source_urls', 'source_used', 'icon_base_url', 'icon_sets', 'conditions'],
   properties: {
     schema_version: { type: 'integer', minimum: 1 },
     generated_at: { type: 'string', format: 'date-time' },
     source_urls: { type: 'array', minItems: 1, items: { type: 'string', format: 'uri' } },
+    source_used: { type: 'string', format: 'uri' },
     icon_base_url: { type: 'string', format: 'uri' },
     icon_sets: {
       type: 'array',
@@ -136,10 +62,110 @@ const SCHEMA = {
   additionalProperties: false
 };
 
+function normalizeWhitespace(value) {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
 function escapeLispString(value) {
   return value
     .replaceAll('\\', '\\\\')
     .replaceAll('"', '\\"');
+}
+
+async function fetchUpstreamHtml(url) {
+  const response = await fetch(url, {
+    headers: {
+      'user-agent': 'openweathermap-phase-g-updater'
+    }
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+  }
+  return response.text();
+}
+
+function parseIconSetsFromHtml(html) {
+  const $ = loadHtml(html);
+  const rows = [];
+
+  $('section#Icon-list table tr').each((_idx, tr) => {
+    const cells = $(tr).find('td');
+    if (cells.length < 3) {
+      return;
+    }
+
+    const dayText = normalizeWhitespace($(cells[0]).text());
+    const nightText = normalizeWhitespace($(cells[1]).text());
+    const descriptionText = normalizeWhitespace($(cells[2]).text());
+
+    const dayMatch = dayText.match(/\b(\d{2}[dn])(?:\.png)?\b/i);
+    const nightMatch = nightText.match(/\b(\d{2}[dn])(?:\.png)?\b/i);
+
+    if (!dayMatch || !nightMatch || descriptionText.length === 0) {
+      return;
+    }
+
+    const day = dayMatch[1].toLowerCase();
+    const night = nightMatch[1].toLowerCase();
+
+    rows.push({
+      key: day.slice(0, 2),
+      day,
+      night,
+      description: descriptionText
+    });
+  });
+
+  const deduped = new Map();
+  for (const row of rows) {
+    deduped.set(row.key, row);
+  }
+
+  return [...deduped.values()].sort((a, b) => a.key.localeCompare(b.key));
+}
+
+function parseConditionsFromHtml(html) {
+  const $ = loadHtml(html);
+  const rows = [];
+
+  $('table tr').each((_idx, tr) => {
+    const cells = $(tr).find('td');
+    if (cells.length < 4) {
+      return;
+    }
+
+    const idText = normalizeWhitespace($(cells[0]).text());
+    if (!/^\d{3}$/.test(idText)) {
+      return;
+    }
+
+    const group = normalizeWhitespace($(cells[1]).text());
+    const description = normalizeWhitespace($(cells[2]).text());
+    const iconCellText = normalizeWhitespace($(cells[3]).text());
+
+    const icons = [...iconCellText.matchAll(/(\d{2}[dn])(?:\.png)?/ig)]
+      .map((m) => m[1].toLowerCase());
+
+    if (group.length === 0 || description.length === 0 || icons.length === 0) {
+      return;
+    }
+
+    const preferredIcon = icons.find((code) => code.endsWith('d')) || icons[0];
+
+    rows.push({
+      id: Number.parseInt(idText, 10),
+      group,
+      description,
+      icon: preferredIcon
+    });
+  });
+
+  const deduped = new Map();
+  for (const row of rows) {
+    deduped.set(row.id, row);
+  }
+
+  return [...deduped.values()].sort((a, b) => a.id - b.id);
 }
 
 function assertShape(dataset) {
@@ -150,6 +176,14 @@ function assertShape(dataset) {
     throw new Error('Dataset must include non-empty conditions array.');
   }
 
+  if (dataset.icon_sets.length < 9) {
+    throw new Error(`Expected at least 9 icon sets, got ${dataset.icon_sets.length}.`);
+  }
+
+  if (dataset.conditions.length < 50) {
+    throw new Error(`Expected at least 50 weather conditions, got ${dataset.conditions.length}.`);
+  }
+
   const iconSet = new Set();
   for (const icon of dataset.icon_sets) {
     for (const k of ['key', 'day', 'night', 'description']) {
@@ -157,10 +191,14 @@ function assertShape(dataset) {
         throw new Error(`Invalid icon entry: missing ${k}`);
       }
     }
+    if (icon.day.slice(0, 2) !== icon.key || icon.night.slice(0, 2) !== icon.key) {
+      throw new Error(`Icon row key/day/night mismatch for key ${icon.key}.`);
+    }
     iconSet.add(icon.day);
     iconSet.add(icon.night);
   }
 
+  const ids = new Set();
   for (const row of dataset.conditions) {
     if (!Number.isInteger(row.id)) {
       throw new Error(`Condition id must be integer: ${JSON.stringify(row)}`);
@@ -177,57 +215,23 @@ function assertShape(dataset) {
     if (!iconSet.has(row.icon)) {
       throw new Error(`Condition icon ${row.icon} is not declared in icon_sets.`);
     }
-  }
-}
-
-async function fetchUpstreamHtml(url) {
-  const response = await fetch(url, {
-    headers: {
-      'user-agent': 'openweathermap-phase-g1-updater'
+    if (ids.has(row.id)) {
+      throw new Error(`Duplicate condition id found: ${row.id}`);
     }
-  });
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+    ids.add(row.id);
   }
-  return response.text();
-}
 
-function assertUpstreamMentions(html, dataset) {
-  const requiredFragments = [
-    'Weather condition codes',
-    'Icon list',
-    '01d',
-    '11d',
-    '500',
-    '800',
-    '804'
-  ];
-  for (const fragment of requiredFragments) {
-    if (!html.includes(fragment)) {
-      throw new Error(`Upstream page does not contain expected marker: ${fragment}`);
+  for (const requiredId of [200, 500, 600, 800, 804]) {
+    if (!ids.has(requiredId)) {
+      throw new Error(`Expected sentinel weather condition ID ${requiredId} is missing.`);
     }
   }
 
-  const sampleIds = dataset.conditions
-    .filter((row) => [200, 500, 600, 800, 804].includes(row.id))
-    .map((row) => String(row.id));
-
-  for (const id of sampleIds) {
-    if (!html.includes(id)) {
-      throw new Error(`Upstream page missing expected weather condition id marker: ${id}`);
+  for (const requiredIcon of ['01d', '10d', '11d', '13d', '50d']) {
+    if (!iconSet.has(requiredIcon)) {
+      throw new Error(`Expected sentinel icon ${requiredIcon} is missing.`);
     }
   }
-}
-
-function buildDataset() {
-  return {
-    schema_version: 1,
-    generated_at: new Date().toISOString(),
-    source_urls: SOURCE_URLS,
-    icon_base_url: 'https://openweathermap.org/payload/api/media/file',
-    icon_sets: ICONS,
-    conditions: [...CONDITIONS].sort((a, b) => a.id - b.id)
-  };
 }
 
 function renderLisp(dataset) {
@@ -256,25 +260,45 @@ ${conditionRows}
 `;
 }
 
-async function main() {
-  const dataset = buildDataset();
-  assertShape(dataset);
+function buildDataset(parsed, sourceUrl) {
+  return {
+    schema_version: 1,
+    generated_at: new Date().toISOString(),
+    source_urls: SOURCE_URLS,
+    source_used: sourceUrl,
+    icon_base_url: 'https://openweathermap.org/payload/api/media/file',
+    icon_sets: parsed.icon_sets,
+    conditions: parsed.conditions
+  };
+}
 
-  let fetched = 0;
-  let lastError = null;
+async function parseFromSource(url) {
+  const html = await fetchUpstreamHtml(url);
+
+  const icon_sets = parseIconSetsFromHtml(html);
+  const conditions = parseConditionsFromHtml(html);
+
+  return { icon_sets, conditions };
+}
+
+async function main() {
+  let dataset = null;
+  const errors = [];
+
   for (const url of SOURCE_URLS) {
     try {
-      const html = await fetchUpstreamHtml(url);
-      assertUpstreamMentions(html, dataset);
-      fetched += 1;
+      const parsed = await parseFromSource(url);
+      const candidate = buildDataset(parsed, url);
+      assertShape(candidate);
+      dataset = candidate;
       break;
     } catch (err) {
-      lastError = err;
+      errors.push(`${url}: ${err instanceof Error ? err.message : String(err)}`);
     }
   }
 
-  if (fetched === 0) {
-    throw new Error(`Unable to validate against upstream weather-conditions docs: ${lastError?.message ?? 'unknown error'}`);
+  if (!dataset) {
+    throw new Error(`Unable to parse weather conditions from upstream docs. Errors: ${errors.join(' | ')}`);
   }
 
   await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
@@ -289,9 +313,11 @@ async function main() {
   const lispText = renderLisp(dataset);
   await fs.writeFile(LISP_PATH, lispText, 'utf8');
 
+  console.log(`Parsed weather conditions from ${dataset.source_used}`);
   console.log(`Wrote ${SCHEMA_PATH}`);
   console.log(`Wrote ${DATA_PATH}`);
   console.log(`Wrote ${LISP_PATH}`);
+  console.log(`Counts: ${dataset.conditions.length} conditions, ${dataset.icon_sets.length} icon sets`);
 }
 
 main().catch((err) => {

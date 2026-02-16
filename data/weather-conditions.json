@@ -1,10 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-02-16T00:36:38.266Z",
+  "generated_at": "2026-02-16T01:30:54.924Z",
   "source_urls": [
     "https://openweathermap.org/weather-conditions",
     "https://docs.openweather.co.uk/weather-conditions"
   ],
+  "source_used": "https://openweathermap.org/weather-conditions",
   "icon_base_url": "https://openweathermap.org/payload/api/media/file",
   "icon_sets": [
     {
@@ -305,61 +306,61 @@
     },
     {
       "id": 701,
-      "group": "Atmosphere",
+      "group": "Mist",
       "description": "mist",
       "icon": "50d"
     },
     {
       "id": 711,
-      "group": "Atmosphere",
+      "group": "Smoke",
       "description": "smoke",
       "icon": "50d"
     },
     {
       "id": 721,
-      "group": "Atmosphere",
+      "group": "Haze",
       "description": "haze",
       "icon": "50d"
     },
     {
       "id": 731,
-      "group": "Atmosphere",
+      "group": "Dust",
       "description": "sand/dust whirls",
       "icon": "50d"
     },
     {
       "id": 741,
-      "group": "Atmosphere",
+      "group": "Fog",
       "description": "fog",
       "icon": "50d"
     },
     {
       "id": 751,
-      "group": "Atmosphere",
+      "group": "Sand",
       "description": "sand",
       "icon": "50d"
     },
     {
       "id": 761,
-      "group": "Atmosphere",
+      "group": "Dust",
       "description": "dust",
       "icon": "50d"
     },
     {
       "id": 762,
-      "group": "Atmosphere",
+      "group": "Ash",
       "description": "volcanic ash",
       "icon": "50d"
     },
     {
       "id": 771,
-      "group": "Atmosphere",
+      "group": "Squall",
       "description": "squalls",
       "icon": "50d"
     },
     {
       "id": 781,
-      "group": "Atmosphere",
+      "group": "Tornado",
       "description": "tornado",
       "icon": "50d"
     },

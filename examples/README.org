@@ -47,8 +47,10 @@ Offline helper demo (no API key required):
 #+begin_src sh
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/07-weather-condition-helpers.lisp
 #+end_src
+Shows lookup, icon URL generation, resolve, and list enrichment helpers.
 
 Live enrichment demo (requires =OPENWEATHER_API_KEY=):
 #+begin_src sh
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/08-current-weather-enrichment.lisp
 #+end_src
+Fetches current weather for London and enriches the primary =weather= entry with canonical metadata.
