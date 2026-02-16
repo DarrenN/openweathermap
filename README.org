@@ -103,6 +103,19 @@ make spec-check
 make update-weather-conditions
 #+end_src
 
+*** Run all examples
+#+begin_src sh
+make examples
+#+end_src
+
+When =OPENWEATHER_API_KEY= is set, live examples are included. Without it, only offline examples run.
+Set =OPENWEATHERMAP_RUN_LIVE_EXAMPLES=1= to require live example execution.
+
+*** Clean local cache/compiled artifacts
+#+begin_src sh
+make clean-cache
+#+end_src
+
 ** Development Workflow
 - Use =make check= for local quality checks.
 - Use =make unit= or =make check= for deterministic non-live checks (CI-safe default).

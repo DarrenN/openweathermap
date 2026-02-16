@@ -212,6 +212,14 @@ All notable changes to this project are tracked here.
   - recursively validates normalized decoded JSON shape (keyword plist keys, no hash-table/vector leakage)
   - checks representative string/numeric fields to guard against string/list normalization regressions
   - demonstrates structured API error reporting via exported condition accessors.
+- Added `scripts/run-examples.sh` to execute all numbered examples in sequence with summary reporting:
+  - always runs offline examples
+  - runs live examples when `OPENWEATHER_API_KEY` is present
+  - supports explicit live mode control via `OPENWEATHERMAP_RUN_LIVE_EXAMPLES`.
+- Added Makefile ergonomics targets:
+  - `make examples` to run the example loop script
+  - `make clean-cache` to remove local `.cache` and compiled Lisp artifacts (`*.fasl`, `*.fsl`, `*.cfasl`).
+- Documented the new example loop and cache-clean workflow in `README.org` and `examples/README.org`.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

@@ -12,9 +12,19 @@ From repo root:
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/01-build-urls.lisp
 #+end_src
 
+Run all examples with one command:
+#+begin_src sh
+make examples
+#+end_src
+
 For live fetch examples, set:
 #+begin_src sh
 export OPENWEATHER_API_KEY="your-key"
+#+end_src
+
+To require running live examples in the loop script, set:
+#+begin_src sh
+export OPENWEATHERMAP_RUN_LIVE_EXAMPLES=1
 #+end_src
 
 For =fetch-current-weather= / =fetch-forecast= examples, keep =:mode= as JSON (or omit it), since fetch helpers decode JSON responses.
