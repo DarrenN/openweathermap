@@ -1,7 +1,7 @@
 ;; SPDX-License-Identifier: MIT
 (asdf:defsystem "openweathermap-integration-tests"
   :description "Integration tests for openweathermap against live APIs"
-  :author "OpenWeatherMap API Client Contributors"
+  :author "DarrenN"
   :license "MIT"
   :depends-on ("openweathermap" "fiveam")
   :serial t

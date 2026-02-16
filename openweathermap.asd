@@ -1,7 +1,7 @@
 ;; SPDX-License-Identifier: MIT
 (asdf:defsystem "openweathermap"
   :description "Common Lisp client for OpenWeatherMap APIs"
-  :author "OpenWeatherMap API Client Contributors"
+  :author "DarrenN"
   :license "MIT"
   :version "0.1.0"
   :serial t
