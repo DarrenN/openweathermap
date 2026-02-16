@@ -74,9 +74,15 @@ If =OPENWEATHERMAP_RUN_LIVE_TESTS= is not set to =1= (or =true/=yes), integratio
 make spec-check
 #+end_src
 
+*** Refresh weather condition mapping artifacts
+#+begin_src sh
+make update-weather-conditions
+#+end_src
+
 ** Development Workflow
 - Use =make check= for local quality checks.
 - Use =make unit= or =make check= for deterministic non-live checks (CI-safe default).
+- Use =make update-weather-conditions= to refresh generated weather condition/icon data files from OpenWeather docs.
 - Keep implementation in =src/=.
 - Keep unit tests in =tests/=.
 - Keep live API integration tests in =integration-tests/=.

@@ -125,6 +125,13 @@ All notable changes to this project are tracked here.
 - Added missing docstrings across internal and public functions in `src/client.lisp` and `src/apis/*.lisp`.
 - Updated `AGENTS.md` with current repository structure, canonical commands, and URL/query safety checklist for future agent handoff.
 - Expanded `README.org` with parameter documentation tables and a draft response-type reference table across all supported API families.
+- Added Phase G1 weather condition mapping scaffolding:
+  - updater script `scripts/update-weather-conditions.mjs`
+  - generated dataset schema `data/weather-conditions.schema.json`
+  - generated dataset `data/weather-conditions.json`
+  - generated Lisp constants `src/data/weather-conditions.lisp`
+  - Make target `make update-weather-conditions`
+  - README/AGENTS docs updates for the new workflow
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

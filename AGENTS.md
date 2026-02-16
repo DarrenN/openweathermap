@@ -32,6 +32,10 @@ This repository also maintains OpenAPI specs for each supported family under `sp
   - Runner prints detailed failure reports before signaling failure
 - `spec/`
   - OpenAPI YAML files (one per API family)
+- `data/`
+  - Generated weather condition/icon mapping artifacts
+- `scripts/`
+  - Project maintenance generators (e.g. weather-condition dataset updater)
 - `examples/`
   - URL-only examples, live fetch examples, all-APIs script, REPL workflow loader
 - `plans/`
@@ -54,6 +58,7 @@ This repository also maintains OpenAPI specs for each supported family under `sp
 - `make integration-air-pollution`
 - `make integration-maps`
 - `make spec-check`: lint `spec/*.yaml` with Redocly
+- `make update-weather-conditions`: regenerate weather condition/icon mapping artifacts
 - `make check`: lint placeholder + unit tests
 - `make repl`: REPL with library loaded
 - `make repl-tests`: REPL with unit test system loaded

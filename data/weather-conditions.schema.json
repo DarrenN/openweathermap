@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/yuzu/openweathermap/schemas/weather-conditions.schema.json",
+  "title": "OpenWeather condition/icon mapping dataset",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "generated_at",
+    "source_urls",
+    "icon_base_url",
+    "icon_sets",
+    "conditions"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_urls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "icon_base_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "icon_sets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "day",
+          "night",
+          "description"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "day": {
+            "type": "string"
+          },
+          "night": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "group",
+          "description",
+          "icon"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "group": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
