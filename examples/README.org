@@ -12,9 +12,19 @@ From repo root:
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/01-build-urls.lisp
 #+end_src
 
+Run all examples with one command:
+#+begin_src sh
+make examples
+#+end_src
+
 For live fetch examples, set:
 #+begin_src sh
 export OPENWEATHER_API_KEY="your-key"
+#+end_src
+
+To require running live examples in the loop script, set:
+#+begin_src sh
+export OPENWEATHERMAP_RUN_LIVE_EXAMPLES=1
 #+end_src
 
 For =fetch-current-weather= / =fetch-forecast= examples, keep =:mode= as JSON (or omit it), since fetch helpers decode JSON responses.
@@ -26,6 +36,7 @@ XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/03-geocoding-fetch.lisp
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/04-maps-tile-fetch.lisp
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/05-all-apis.lisp
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/08-current-weather-enrichment.lisp
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/09-live-parser-contract-smoke.lisp
 #+end_src
 
 ** REPL-oriented workflow example
@@ -56,3 +67,10 @@ Live enrichment demo (requires =OPENWEATHER_API_KEY=):
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/08-current-weather-enrichment.lisp
 #+end_src
 Fetches current weather for London and enriches the primary =weather= entry with canonical metadata.
+
+Live parser/contract smoke demo (requires =OPENWEATHER_API_KEY=):
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/09-live-parser-contract-smoke.lisp
+#+end_src
+Runs live calls across Current, Forecast, Geocoding, One Call, and Air Pollution;
+verifies normalized plist/keyword decoding and key ergonomic helpers.

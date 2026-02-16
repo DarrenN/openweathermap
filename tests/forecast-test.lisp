@@ -63,8 +63,8 @@
            (values "{\"cod\":\"200\",\"cnt\":40}" 200)))
       (let ((result (openweathermap:fetch-forecast :q "Tokyo")))
         (is (listp result))
-        (is (or (equal 40 (getf result :cnt))
-                (equal 40 (getf result :|cnt|))))))))
+        (is (equal 40 (getf result :cnt)))
+        (is (null (getf result :|cnt|)))))))
 
 (test fetch-forecast-rejects-non-json-mode
   (let ((openweathermap:*api-key* "test-key"))

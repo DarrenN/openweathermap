@@ -13,14 +13,19 @@
    :with-http-get-function
    :missing-api-key-error
    :api-request-error
+   :api-request-error-status-code
+   :api-request-error-message
+   :api-request-error-endpoint
    :api-network-error
    :api-response-parse-error
    :invalid-parameters-error
+   :invalid-parameters-error-message
    :build-onecall-url
    :build-timemachine-url
    :build-day-summary-url
    :build-overview-url
    :make-client-weather-request
+   :make-onecall-request
    :make-timemachine-request
    :make-day-summary-request
    :make-overview-request

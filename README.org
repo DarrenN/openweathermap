@@ -16,6 +16,30 @@ This repository is in early bootstrap.
 - Separate integration test suite for live API checks.
 - Project-local OpenAPI specifications per API family.
 
+** Consumer Quickstart
+Set your API key:
+#+begin_src sh
+export OPENWEATHER_API_KEY="your-key"
+#+end_src
+
+Load the library from this repository:
+#+begin_src lisp
+(require :asdf)
+(asdf:load-asd (truename "openweathermap.asd"))
+(asdf:load-system :openweathermap)
+#+end_src
+
+Configure API key and make a first request:
+#+begin_src lisp
+(openweathermap:configure-api-key (uiop:getenv "OPENWEATHER_API_KEY"))
+
+(let ((current (openweathermap:fetch-current-weather :q "London" :units :metric)))
+  (format t "~&City: ~A~%" (getf current :name))
+  (format t "Temp (C): ~A~%" (getf (getf current :main) :temp)))
+#+end_src
+
+All JSON fetch responses are decoded to plists using normalized keyword keys (for example =:name=, =:weather=, =:dt_txt=).
+
 ** Quick Start
 *** Prerequisites
 - SBCL
@@ -79,6 +103,19 @@ make spec-check
 make update-weather-conditions
 #+end_src
 
+*** Run all examples
+#+begin_src sh
+make examples
+#+end_src
+
+When =OPENWEATHER_API_KEY= is set, live examples are included. Without it, only offline examples run.
+Set =OPENWEATHERMAP_RUN_LIVE_EXAMPLES=1= to require live example execution.
+
+*** Clean local cache/compiled artifacts
+#+begin_src sh
+make clean-cache
+#+end_src
+
 ** Development Workflow
 - Use =make check= for local quality checks.
 - Use =make unit= or =make check= for deterministic non-live checks (CI-safe default).
@@ -101,10 +138,52 @@ make update-weather-conditions
 - Function naming:
   - =build-*= functions generate endpoint URLs.
   - =make-*= functions return request metadata plist =(:method :get :url "...")=.
+  - For One Call request metadata, =make-onecall-request= is the preferred name; =make-client-weather-request= is retained as a compatibility alias.
   - =fetch-*= functions execute HTTP and return decoded plist responses (or raw tile payload for maps).
 - Response strategy:
   - Baseline representation is plist decoded from JSON.
   - Structured/typed response objects may be added later without breaking this baseline.
+
+** Error Handling
+Common conditions and how to inspect them:
+- =missing-api-key-error=: API key not configured.
+- =invalid-parameters-error=: local contract validation failure.
+- =api-request-error=: non-200 API response.
+- =api-network-error=: transport/network failure after retries.
+- =api-response-parse-error=: response decode failure.
+
+Reader accessors available for structured handling:
+- =api-request-error-status-code=
+- =api-request-error-message=
+- =api-request-error-endpoint=
+- =invalid-parameters-error-message=
+
+Example:
+#+begin_src lisp
+(handler-case
+    (openweathermap:fetch-current-weather :q "London" :units :metric)
+  (openweathermap:invalid-parameters-error (err)
+    (format t "~&Invalid params: ~A~%"
+            (openweathermap:invalid-parameters-error-message err)))
+  (openweathermap:api-request-error (err)
+    (format t "~&API error status=~A endpoint=~A message=~A~%"
+            (openweathermap:api-request-error-status-code err)
+            (openweathermap:api-request-error-endpoint err)
+            (openweathermap:api-request-error-message err))))
+#+end_src
+
+** Contract Notes
+- JSON response objects are normalized to keyword plist keys.
+  - Example: use =(getf result :name)=, not escaped key variants.
+- Query parameter rest arguments must be even key/value lists.
+  - Example invalid form: =:units= with missing value.
+- One Call family URL builders validate required positional arguments locally:
+  - =build-onecall-url= requires numeric =lat/lon=
+  - =build-timemachine-url= requires integer =dt=
+  - =build-day-summary-url= requires =YYYY-MM-DD= date
+- Current/Forecast fetch helpers decode JSON only; use =:mode "json"= or omit =:mode=.
+- Current/Forecast location selectors are exclusive:
+  - exactly one selector: =lat/lon= pair, =q=, =id=, or =zip=.
 
 ** Public API (Current Draft)
 Configure client settings:
@@ -181,6 +260,7 @@ Resolution behavior:
 Runnable helper demos:
 - =examples/07-weather-condition-helpers.lisp= (offline)
 - =examples/08-current-weather-enrichment.lisp= (live current-weather enrichment)
+- =examples/09-live-parser-contract-smoke.lisp= (live parser/contract smoke across JSON APIs)
 - See =examples/README.org= for commands.
 
 ** Parameter Reference
@@ -241,7 +321,7 @@ The table below summarizes successful (=200 OK=) response shapes based on OpenWe
 | Maps Tile =/map/{layer}/{z}/{x}/{y}.png= | =fetch-weather-tile= | Binary payload | PNG image bytes/string payload (not JSON) |
 
 Notes:
-- In Lisp, JSON objects are decoded as property lists by default.
+- In Lisp, JSON objects are decoded as property lists with normalized keyword keys (for example, use =:name=, =:weather=, =:dt_txt=).
 - JSON arrays decode to Lisp lists.
 - Optional fields may be absent depending on endpoint, location, and data availability.
 - For One Call endpoint schemas, see =spec/onecall.yaml=.

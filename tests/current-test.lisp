@@ -50,8 +50,8 @@
            (values "{\"name\":\"Tokyo\",\"cod\":200}" 200)))
       (let ((result (openweathermap:fetch-current-weather :q "Tokyo")))
         (is (listp result))
-        (is (or (equal "Tokyo" (getf result :name))
-                (equal "Tokyo" (getf result :|name|))))))))
+        (is (equal "Tokyo" (getf result :name)))
+        (is (null (getf result :|name|)))))))
 
 (test fetch-current-weather-rejects-non-json-mode
   (let ((openweathermap:*api-key* "test-key"))

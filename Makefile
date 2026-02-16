@@ -4,7 +4,7 @@ UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
 REDOCLY := ./node_modules/.bin/redocly
 
-.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check update-weather-conditions repl repl-tests repl-integration tree prepare-cache
+.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check update-weather-conditions examples clean-cache repl repl-tests repl-integration tree prepare-cache
 
 help:
 	@echo "Available targets:"
@@ -22,6 +22,8 @@ help:
 	@echo "  make lint           Placeholder lint target"
 	@echo "  make spec-check     Validate OpenAPI spec with Redocly CLI"
 	@echo "  make update-weather-conditions Refresh weather condition/icon dataset artifacts"
+	@echo "  make examples       Run all examples (live examples require OPENWEATHER_API_KEY)"
+	@echo "  make clean-cache    Remove local cache and compiled Lisp artifacts"
 	@echo "  make repl           Start SBCL REPL"
 	@echo "  make repl-tests     Start SBCL REPL with unit test system loaded"
 	@echo "  make repl-integration Start SBCL REPL with integration test system loaded"
@@ -113,6 +115,14 @@ spec-check:
 
 update-weather-conditions:
 	node scripts/update-weather-conditions.mjs
+
+examples: prepare-cache
+	./scripts/run-examples.sh
+
+clean-cache:
+	@echo "Removing local cache and compiled artifacts..."
+	@rm -rf .cache
+	@find . -type f \( -name '*.fasl' -o -name '*.fsl' -o -name '*.cfasl' \) -print -delete
 
 repl: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \

@@ -20,6 +20,7 @@
                 :build-air-pollution-history-url
                 :build-weather-tile-url
                 :make-client-weather-request
+                :make-onecall-request
                 :make-current-weather-request
                 :make-forecast-request
                 :make-geocoding-request
@@ -38,8 +39,12 @@
                 :fetch-air-pollution-history
                 :fetch-weather-tile
                 :api-request-error
+                :api-request-error-status-code
+                :api-request-error-message
+                :api-request-error-endpoint
                 :api-network-error
                 :invalid-parameters-error
+                :invalid-parameters-error-message
                 :with-http-get-function)
   (:export :run-tests))
 

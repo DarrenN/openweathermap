@@ -57,7 +57,8 @@
            (values "{\"coord\":{\"lon\":139.0,\"lat\":35.0},\"list\":[]}" 200)))
       (let ((result (openweathermap:fetch-air-pollution 35.0 139.0)))
         (is (listp result))
-        (is (or (getf result :coord) (getf result :|coord|)))))))
+        (is (getf result :coord))
+        (is (null (getf result :|coord|)))))))
 
 (test fetch-air-pollution-forecast-parses-json
   (let ((openweathermap:*api-key* "test-key"))
@@ -76,4 +77,5 @@
            (values "{\"list\":[{\"dt\":1700000000}]}" 200)))
       (let ((result (openweathermap:fetch-air-pollution-history 35.0 139.0 1700000000 1700003600)))
         (is (listp result))
-        (is (or (getf result :list) (getf result :|list|)))))))
+        (is (getf result :list))
+        (is (null (getf result :|list|)))))))

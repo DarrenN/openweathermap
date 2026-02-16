@@ -21,6 +21,30 @@
       (is (search "/data/3.0/onecall/overview" overview))
       (is (search "date=2026-02-16" overview)))))
 
+(test onecall-builders-validate-required-parameters
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-onecall-url nil 139.0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-onecall-url 35.0 nil))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-timemachine-url 35.0 139.0 nil))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-timemachine-url 35.0 139.0 1700000000.5))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-day-summary-url 35.0 139.0 nil))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-day-summary-url 35.0 139.0 "2026/02/15"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-overview-url nil 139.0))))
+
+(test build-onecall-url-rejects-odd-query-param-plist
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-onecall-url 35.0 139.0 :units))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-timemachine-url 35.0 139.0 1700000000 :lang "en" :units))))
+
 (test request-builders-return-shape
   (let ((openweathermap:*api-key* "test-key"))
     (let ((onecall (openweathermap:make-client-weather-request 35.0 139.0 :lang "en"))
@@ -30,6 +54,14 @@
       (is (eq :get (getf timemachine :method)))
       (is (search "dt=1700000000" (getf timemachine :url))))))
 
+(test make-onecall-request-alias-returns-shape
+  (let ((openweathermap:*api-key* "test-key"))
+    (let ((legacy (openweathermap:make-client-weather-request 35.0 139.0 :units :metric))
+          (alias (openweathermap:make-onecall-request 35.0 139.0 :units :metric)))
+      (is (eq :get (getf alias :method)))
+      (is (search "units=metric" (getf alias :url)))
+      (is (string= (getf legacy :url) (getf alias :url))))))
+
 (test fetch-onecall-parses-json
   (let ((openweathermap:*api-key* "test-key"))
     (openweathermap:with-http-get-function
@@ -38,8 +70,10 @@
            (values "{\"lat\":35.0,\"timezone\":\"Asia/Tokyo\"}" 200)))
       (let ((result (openweathermap:fetch-onecall 35.0 139.0)))
         (is (listp result))
-        (is (or (equal 35.0 (getf result :lat))
-                (equal 35.0 (getf result :|lat|))))))))
+        (is (equal 35.0 (getf result :lat)))
+        (is (equal "Asia/Tokyo" (getf result :timezone)))
+        (is (null (getf result :|lat|)))
+        (is (null (getf result :|timezone|)))))))
 
 (test fetch-onecall-retries-transient-status
   (let ((openweathermap:*api-key* "test-key")
@@ -55,8 +89,8 @@
                (values "{\"ok\":true}" 200))))
       (let ((result (openweathermap:fetch-onecall 35.0 139.0)))
         (is (= 2 attempts))
-        (is (or (eq t (getf result :ok))
-                (eq t (getf result :|ok|))))))))
+        (is (eq t (getf result :ok)))
+        (is (null (getf result :|ok|)))))))
 
 (test fetch-onecall-signals-api-request-error-on-http-failure
   (let ((openweathermap:*api-key* "test-key")
@@ -77,3 +111,29 @@
            (error "socket closed")))
       (signals openweathermap:api-network-error
         (openweathermap:fetch-onecall 35.0 139.0)))))
+
+(test api-request-error-reader-accessors
+  (let ((openweathermap:*api-key* "test-key")
+        (openweathermap:*max-retries* 0))
+    (openweathermap:with-http-get-function
+        ((lambda (_url _timeout)
+           (declare (ignore _url _timeout))
+           (values "bad request body" 400)))
+      (handler-case
+          (progn
+            (openweathermap:fetch-onecall 35.0 139.0)
+            (fail "Expected API-REQUEST-ERROR."))
+        (openweathermap:api-request-error (err)
+          (is (= 400 (openweathermap:api-request-error-status-code err)))
+          (is (string= "bad request body" (openweathermap:api-request-error-message err)))
+          (is (eq :onecall (openweathermap:api-request-error-endpoint err))))))))
+
+(test invalid-parameters-error-reader-accessor
+  (let ((openweathermap:*api-key* "test-key"))
+    (handler-case
+        (progn
+          (openweathermap:build-onecall-url nil 139.0)
+          (fail "Expected INVALID-PARAMETERS-ERROR."))
+      (openweathermap:invalid-parameters-error (err)
+        (is (search "One Call requires numeric lat and lon."
+                    (openweathermap:invalid-parameters-error-message err)))))))
