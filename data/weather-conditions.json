@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-02-16T01:30:54.924Z",
+  "source_urls": [
+    "https://openweathermap.org/weather-conditions",
+    "https://docs.openweather.co.uk/weather-conditions"
+  ],
+  "source_used": "https://openweathermap.org/weather-conditions",
+  "icon_base_url": "https://openweathermap.org/payload/api/media/file",
+  "icon_sets": [
+    {
+      "key": "01",
+      "day": "01d",
+      "night": "01n",
+      "description": "clear sky"
+    },
+    {
+      "key": "02",
+      "day": "02d",
+      "night": "02n",
+      "description": "few clouds"
+    },
+    {
+      "key": "03",
+      "day": "03d",
+      "night": "03n",
+      "description": "scattered clouds"
+    },
+    {
+      "key": "04",
+      "day": "04d",
+      "night": "04n",
+      "description": "broken clouds"
+    },
+    {
+      "key": "09",
+      "day": "09d",
+      "night": "09n",
+      "description": "shower rain"
+    },
+    {
+      "key": "10",
+      "day": "10d",
+      "night": "10n",
+      "description": "rain"
+    },
+    {
+      "key": "11",
+      "day": "11d",
+      "night": "11n",
+      "description": "thunderstorm"
+    },
+    {
+      "key": "13",
+      "day": "13d",
+      "night": "13n",
+      "description": "snow"
+    },
+    {
+      "key": "50",
+      "day": "50d",
+      "night": "50n",
+      "description": "mist"
+    }
+  ],
+  "conditions": [
+    {
+      "id": 200,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with light rain",
+      "icon": "11d"
+    },
+    {
+      "id": 201,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with rain",
+      "icon": "11d"
+    },
+    {
+      "id": 202,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with heavy rain",
+      "icon": "11d"
+    },
+    {
+      "id": 210,
+      "group": "Thunderstorm",
+      "description": "light thunderstorm",
+      "icon": "11d"
+    },
+    {
+      "id": 211,
+      "group": "Thunderstorm",
+      "description": "thunderstorm",
+      "icon": "11d"
+    },
+    {
+      "id": 212,
+      "group": "Thunderstorm",
+      "description": "heavy thunderstorm",
+      "icon": "11d"
+    },
+    {
+      "id": 221,
+      "group": "Thunderstorm",
+      "description": "ragged thunderstorm",
+      "icon": "11d"
+    },
+    {
+      "id": 230,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with light drizzle",
+      "icon": "11d"
+    },
+    {
+      "id": 231,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with drizzle",
+      "icon": "11d"
+    },
+    {
+      "id": 232,
+      "group": "Thunderstorm",
+      "description": "thunderstorm with heavy drizzle",
+      "icon": "11d"
+    },
+    {
+      "id": 300,
+      "group": "Drizzle",
+      "description": "light intensity drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 301,
+      "group": "Drizzle",
+      "description": "drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 302,
+      "group": "Drizzle",
+      "description": "heavy intensity drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 310,
+      "group": "Drizzle",
+      "description": "light intensity drizzle rain",
+      "icon": "09d"
+    },
+    {
+      "id": 311,
+      "group": "Drizzle",
+      "description": "drizzle rain",
+      "icon": "09d"
+    },
+    {
+      "id": 312,
+      "group": "Drizzle",
+      "description": "heavy intensity drizzle rain",
+      "icon": "09d"
+    },
+    {
+      "id": 313,
+      "group": "Drizzle",
+      "description": "shower rain and drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 314,
+      "group": "Drizzle",
+      "description": "heavy shower rain and drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 321,
+      "group": "Drizzle",
+      "description": "shower drizzle",
+      "icon": "09d"
+    },
+    {
+      "id": 500,
+      "group": "Rain",
+      "description": "light rain",
+      "icon": "10d"
+    },
+    {
+      "id": 501,
+      "group": "Rain",
+      "description": "moderate rain",
+      "icon": "10d"
+    },
+    {
+      "id": 502,
+      "group": "Rain",
+      "description": "heavy intensity rain",
+      "icon": "10d"
+    },
+    {
+      "id": 503,
+      "group": "Rain",
+      "description": "very heavy rain",
+      "icon": "10d"
+    },
+    {
+      "id": 504,
+      "group": "Rain",
+      "description": "extreme rain",
+      "icon": "10d"
+    },
+    {
+      "id": 511,
+      "group": "Rain",
+      "description": "freezing rain",
+      "icon": "13d"
+    },
+    {
+      "id": 520,
+      "group": "Rain",
+      "description": "light intensity shower rain",
+      "icon": "09d"
+    },
+    {
+      "id": 521,
+      "group": "Rain",
+      "description": "shower rain",
+      "icon": "09d"
+    },
+    {
+      "id": 522,
+      "group": "Rain",
+      "description": "heavy intensity shower rain",
+      "icon": "09d"
+    },
+    {
+      "id": 531,
+      "group": "Rain",
+      "description": "ragged shower rain",
+      "icon": "09d"
+    },
+    {
+      "id": 600,
+      "group": "Snow",
+      "description": "light snow",
+      "icon": "13d"
+    },
+    {
+      "id": 601,
+      "group": "Snow",
+      "description": "snow",
+      "icon": "13d"
+    },
+    {
+      "id": 602,
+      "group": "Snow",
+      "description": "heavy snow",
+      "icon": "13d"
+    },
+    {
+      "id": 611,
+      "group": "Snow",
+      "description": "sleet",
+      "icon": "13d"
+    },
+    {
+      "id": 612,
+      "group": "Snow",
+      "description": "light shower sleet",
+      "icon": "13d"
+    },
+    {
+      "id": 613,
+      "group": "Snow",
+      "description": "shower sleet",
+      "icon": "13d"
+    },
+    {
+      "id": 615,
+      "group": "Snow",
+      "description": "light rain and snow",
+      "icon": "13d"
+    },
+    {
+      "id": 616,
+      "group": "Snow",
+      "description": "rain and snow",
+      "icon": "13d"
+    },
+    {
+      "id": 620,
+      "group": "Snow",
+      "description": "light shower snow",
+      "icon": "13d"
+    },
+    {
+      "id": 621,
+      "group": "Snow",
+      "description": "shower snow",
+      "icon": "13d"
+    },
+    {
+      "id": 622,
+      "group": "Snow",
+      "description": "heavy shower snow",
+      "icon": "13d"
+    },
+    {
+      "id": 701,
+      "group": "Mist",
+      "description": "mist",
+      "icon": "50d"
+    },
+    {
+      "id": 711,
+      "group": "Smoke",
+      "description": "smoke",
+      "icon": "50d"
+    },
+    {
+      "id": 721,
+      "group": "Haze",
+      "description": "haze",
+      "icon": "50d"
+    },
+    {
+      "id": 731,
+      "group": "Dust",
+      "description": "sand/dust whirls",
+      "icon": "50d"
+    },
+    {
+      "id": 741,
+      "group": "Fog",
+      "description": "fog",
+      "icon": "50d"
+    },
+    {
+      "id": 751,
+      "group": "Sand",
+      "description": "sand",
+      "icon": "50d"
+    },
+    {
+      "id": 761,
+      "group": "Dust",
+      "description": "dust",
+      "icon": "50d"
+    },
+    {
+      "id": 762,
+      "group": "Ash",
+      "description": "volcanic ash",
+      "icon": "50d"
+    },
+    {
+      "id": 771,
+      "group": "Squall",
+      "description": "squalls",
+      "icon": "50d"
+    },
+    {
+      "id": 781,
+      "group": "Tornado",
+      "description": "tornado",
+      "icon": "50d"
+    },
+    {
+      "id": 800,
+      "group": "Clear",
+      "description": "clear sky",
+      "icon": "01d"
+    },
+    {
+      "id": 801,
+      "group": "Clouds",
+      "description": "few clouds: 11-25%",
+      "icon": "02d"
+    },
+    {
+      "id": 802,
+      "group": "Clouds",
+      "description": "scattered clouds: 25-50%",
+      "icon": "03d"
+    },
+    {
+      "id": 803,
+      "group": "Clouds",
+      "description": "broken clouds: 51-84%",
+      "icon": "04d"
+    },
+    {
+      "id": 804,
+      "group": "Clouds",
+      "description": "overcast clouds: 85-100%",
+      "icon": "04d"
+    }
+  ]
+}

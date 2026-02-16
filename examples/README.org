@@ -23,6 +23,7 @@ XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/02-current-weather-fetch.lis
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/03-geocoding-fetch.lisp
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/04-maps-tile-fetch.lisp
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/05-all-apis.lisp
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/08-current-weather-enrichment.lisp
 #+end_src
 
 ** REPL-oriented workflow example
@@ -40,3 +41,16 @@ If you only want a one-shot load check (non-interactive), use:
 #+begin_src sh
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/06-repl-workflow.lisp
 #+end_src
+
+** Weather condition helper examples
+Offline helper demo (no API key required):
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/07-weather-condition-helpers.lisp
+#+end_src
+Shows lookup, icon URL generation, resolve, and list enrichment helpers.
+
+Live enrichment demo (requires =OPENWEATHER_API_KEY=):
+#+begin_src sh
+XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/08-current-weather-enrichment.lisp
+#+end_src
+Fetches current weather for London and enriches the primary =weather= entry with canonical metadata.

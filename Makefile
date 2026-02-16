@@ -4,7 +4,7 @@ UNIT_SYSTEM := $(PROJECT)-tests
 INTEGRATION_SYSTEM := $(PROJECT)-integration-tests
 REDOCLY := ./node_modules/.bin/redocly
 
-.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check repl repl-tests repl-integration tree prepare-cache
+.PHONY: help test unit integration integration-onecall integration-current integration-forecast integration-geocoding integration-air-pollution integration-maps test-all check lint spec-check update-weather-conditions repl repl-tests repl-integration tree prepare-cache
 
 help:
 	@echo "Available targets:"
@@ -21,6 +21,7 @@ help:
 	@echo "  make check          Run lint + unit tests"
 	@echo "  make lint           Placeholder lint target"
 	@echo "  make spec-check     Validate OpenAPI spec with Redocly CLI"
+	@echo "  make update-weather-conditions Refresh weather condition/icon dataset artifacts"
 	@echo "  make repl           Start SBCL REPL"
 	@echo "  make repl-tests     Start SBCL REPL with unit test system loaded"
 	@echo "  make repl-integration Start SBCL REPL with integration test system loaded"
@@ -109,6 +110,9 @@ spec-check:
 		echo "Redocly CLI not found. Run: npm install"; \
 		exit 1; \
 	fi
+
+update-weather-conditions:
+	node scripts/update-weather-conditions.mjs
 
 repl: prepare-cache
 	XDG_CACHE_HOME=$(CURDIR)/.cache sbcl \

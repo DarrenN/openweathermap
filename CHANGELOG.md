@@ -125,6 +125,39 @@ All notable changes to this project are tracked here.
 - Added missing docstrings across internal and public functions in `src/client.lisp` and `src/apis/*.lisp`.
 - Updated `AGENTS.md` with current repository structure, canonical commands, and URL/query safety checklist for future agent handoff.
 - Expanded `README.org` with parameter documentation tables and a draft response-type reference table across all supported API families.
+- Added Phase G1 weather condition mapping scaffolding:
+  - updater script `scripts/update-weather-conditions.mjs`
+  - generated dataset schema `data/weather-conditions.schema.json`
+  - generated dataset `data/weather-conditions.json`
+  - generated Lisp constants `src/data/weather-conditions.lisp`
+  - Make target `make update-weather-conditions`
+  - README/AGENTS docs updates for the new workflow
+- Added Phase G2 weather-condition helper API in `src/weather-conditions.lisp`:
+  - `lookup-weather-condition`
+  - `weather-icon-url`
+  - `resolve-weather-condition`
+  - `enrich-weather-entry`
+  - `enrich-weather-list`
+- Updated ASDF load order to include generated weather-condition data module.
+- Added targeted unit tests for weather-condition helpers in `tests/weather-conditions-test.lisp`.
+- Expanded weather-condition helper test coverage for Phase G3:
+  - known-ID sample assertions (200/500/800/804)
+  - icon URL input validation failure cases
+  - canonical fallback behavior when payload fields are missing
+  - full catalog icon conformance check against supported icon set
+- Documented weather-condition helper API in `README.org` with signatures, return behavior, and examples.
+- Added weather-condition examples:
+  - `examples/07-weather-condition-helpers.lisp` (offline helper walkthrough)
+  - `examples/08-current-weather-enrichment.lisp` (live current-weather enrichment flow)
+- Updated `examples/README.org` with commands for the new scripts.
+- Fixed `examples/08-current-weather-enrichment.lisp` key extraction to use case-insensitive plist lookup and added explicit error output when the weather list is missing.
+- Completed Phase G4 documentation/examples pass:
+  - added weather helper API docs and runnable demo pointers in `README.org`
+  - expanded `examples/README.org` with helper example descriptions
+- Hardened Phase G1 updater implementation:
+  - switched from static in-script tables to parse-driven extraction from upstream weather-condition HTML
+  - added strict source validation and sentinel checks before accepting a source
+  - improved per-source error reporting when parsing fails
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

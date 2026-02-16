@@ -74,9 +74,15 @@ If =OPENWEATHERMAP_RUN_LIVE_TESTS= is not set to =1= (or =true/=yes), integratio
 make spec-check
 #+end_src
 
+*** Refresh weather condition mapping artifacts
+#+begin_src sh
+make update-weather-conditions
+#+end_src
+
 ** Development Workflow
 - Use =make check= for local quality checks.
 - Use =make unit= or =make check= for deterministic non-live checks (CI-safe default).
+- Use =make update-weather-conditions= to refresh generated weather condition/icon data files from OpenWeather docs.
 - Keep implementation in =src/=.
 - Keep unit tests in =tests/=.
 - Keep live API integration tests in =integration-tests/=.
@@ -143,6 +149,39 @@ Build request URLs only (no network call):
 (openweathermap:build-day-summary-url 35.0 139.0 "2026-02-15")
 (openweathermap:build-overview-url 35.0 139.0)
 #+end_src
+
+Weather condition helpers:
+#+begin_src lisp
+(openweathermap:lookup-weather-condition 500)
+(openweathermap:weather-icon-url "10d")                 ; => .../10d@2x.png
+(openweathermap:weather-icon-url "10d" :size :1x)       ; => .../10d.png
+(openweathermap:resolve-weather-condition
+ :id 500 :icon "10n" :description "light rain" :main "Rain")
+(openweathermap:enrich-weather-entry
+ '(:id 801 :main "Clouds" :description "few clouds" :icon "02n"))
+(openweathermap:enrich-weather-list
+ '((:id 800 :main "Clear" :description "clear sky" :icon "01d")
+   (:id 500 :main "Rain" :description "light rain" :icon "10n")))
+#+end_src
+
+*** Weather Condition Helper API
+| Function | Signature | Returns | Notes |
+|----------+-----------+---------+-------|
+| =lookup-weather-condition= | =(condition-id)= | plist or =NIL= | Looks up canonical condition by numeric ID (e.g. =500=). |
+| =weather-icon-url= | =(icon-code &key size secure-p)= | string URL | Icon code must be =NNd= or =NNn=. =size= accepts =:1x=, =:2x= (default), =:4x=. |
+| =resolve-weather-condition= | =(&key id icon description main)= | plist | Merges payload fields with canonical mapping; includes fallback metadata and =:unknown-condition-p=. |
+| =enrich-weather-entry= | =(weather-entry)= | plist | Enriches one weather object plist from API payload. |
+| =enrich-weather-list= | =(weather-list)= | list | Maps enrichment across list of weather objects. |
+
+Resolution behavior:
+- Payload =:description= and =:icon= are preferred when present.
+- Canonical mapping is used as fallback and for metadata like =:icon-day= / =:icon-night=.
+- Unknown condition IDs do not error; result marks =:unknown-condition-p= as true.
+
+Runnable helper demos:
+- =examples/07-weather-condition-helpers.lisp= (offline)
+- =examples/08-current-weather-enrichment.lisp= (live current-weather enrichment)
+- See =examples/README.org= for commands.
 
 ** Parameter Reference
 This client accepts Common Lisp values and serializes them into query params.
