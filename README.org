@@ -247,6 +247,7 @@ Resolution behavior:
 Runnable helper demos:
 - =examples/07-weather-condition-helpers.lisp= (offline)
 - =examples/08-current-weather-enrichment.lisp= (live current-weather enrichment)
+- =examples/09-live-parser-contract-smoke.lisp= (live parser/contract smoke across JSON APIs)
 - See =examples/README.org= for commands.
 
 ** Parameter Reference
