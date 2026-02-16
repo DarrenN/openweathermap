@@ -150,6 +150,34 @@ Build request URLs only (no network call):
 (openweathermap:build-overview-url 35.0 139.0)
 #+end_src
 
+Weather condition helpers:
+#+begin_src lisp
+(openweathermap:lookup-weather-condition 500)
+(openweathermap:weather-icon-url "10d")                 ; => .../10d@2x.png
+(openweathermap:weather-icon-url "10d" :size :1x)       ; => .../10d.png
+(openweathermap:resolve-weather-condition
+ :id 500 :icon "10n" :description "light rain" :main "Rain")
+(openweathermap:enrich-weather-entry
+ '(:id 801 :main "Clouds" :description "few clouds" :icon "02n"))
+(openweathermap:enrich-weather-list
+ '((:id 800 :main "Clear" :description "clear sky" :icon "01d")
+   (:id 500 :main "Rain" :description "light rain" :icon "10n")))
+#+end_src
+
+*** Weather Condition Helper API
+| Function | Signature | Returns | Notes |
+|----------+-----------+---------+-------|
+| =lookup-weather-condition= | =(condition-id)= | plist or =NIL= | Looks up canonical condition by numeric ID (e.g. =500=). |
+| =weather-icon-url= | =(icon-code &key size secure-p)= | string URL | Icon code must be =NNd= or =NNn=. =size= accepts =:1x=, =:2x= (default), =:4x=. |
+| =resolve-weather-condition= | =(&key id icon description main)= | plist | Merges payload fields with canonical mapping; includes fallback metadata and =:unknown-condition-p=. |
+| =enrich-weather-entry= | =(weather-entry)= | plist | Enriches one weather object plist from API payload. |
+| =enrich-weather-list= | =(weather-list)= | list | Maps enrichment across list of weather objects. |
+
+Resolution behavior:
+- Payload =:description= and =:icon= are preferred when present.
+- Canonical mapping is used as fallback and for metadata like =:icon-day= / =:icon-night=.
+- Unknown condition IDs do not error; result marks =:unknown-condition-p= as true.
+
 ** Parameter Reference
 This client accepts Common Lisp values and serializes them into query params.
 

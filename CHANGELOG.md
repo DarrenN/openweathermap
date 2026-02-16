@@ -132,6 +132,20 @@ All notable changes to this project are tracked here.
   - generated Lisp constants `src/data/weather-conditions.lisp`
   - Make target `make update-weather-conditions`
   - README/AGENTS docs updates for the new workflow
+- Added Phase G2 weather-condition helper API in `src/weather-conditions.lisp`:
+  - `lookup-weather-condition`
+  - `weather-icon-url`
+  - `resolve-weather-condition`
+  - `enrich-weather-entry`
+  - `enrich-weather-list`
+- Updated ASDF load order to include generated weather-condition data module.
+- Added targeted unit tests for weather-condition helpers in `tests/weather-conditions-test.lisp`.
+- Documented weather-condition helper API in `README.org` with signatures, return behavior, and examples.
+- Added weather-condition examples:
+  - `examples/07-weather-condition-helpers.lisp` (offline helper walkthrough)
+  - `examples/08-current-weather-enrichment.lisp` (live current-weather enrichment flow)
+- Updated `examples/README.org` with commands for the new scripts.
+- Fixed `examples/08-current-weather-enrichment.lisp` key extraction to use case-insensitive plist lookup and added explicit error output when the weather list is missing.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

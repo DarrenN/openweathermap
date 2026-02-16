@@ -11,6 +11,8 @@
    (:file "src/errors")
    (:file "src/config")
    (:file "src/client")
+   (:file "src/data/weather-conditions")
+   (:file "src/weather-conditions")
    (:file "src/apis/current")
    (:file "src/apis/forecast")
    (:file "src/apis/geocoding")

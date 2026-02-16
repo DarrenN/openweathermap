@@ -55,4 +55,9 @@
    :build-weather-tile-url
    :make-weather-tile-request
    :fetch-weather-tile
+   :lookup-weather-condition
+   :weather-icon-url
+   :resolve-weather-condition
+   :enrich-weather-entry
+   :enrich-weather-list
    :ensure-api-key))
