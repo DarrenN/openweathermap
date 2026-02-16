@@ -17,14 +17,15 @@ Improve first-use ergonomics and API contract stability for the `openweathermap`
 - [x] Normalize decoded JSON object keys to stable keyword symbols so callers can rely on straightforward `(getf data :key)` access.
 - [x] Add/expand unit tests for all validations and key-normalization behavior.
 
-## Phase 2: Public API Ergonomics (Planned)
-- [ ] Export condition slot readers for structured downstream error handling:
+## Phase 2: Public API Ergonomics (Completed)
+- [x] Export condition slot readers for structured downstream error handling:
   - `api-request-error-status-code`
   - `api-request-error-message`
   - `api-request-error-endpoint`
   - `invalid-parameters-error-message`
-- [ ] Add consumer-friendly alias(es) where naming is awkward (e.g. `make-onecall-request` alias for `make-client-weather-request`) while retaining existing names.
-- [ ] Evaluate optional per-client configuration model to reduce global mutable state friction.
+- [x] Add consumer-friendly alias(es) where naming is awkward (e.g. `make-onecall-request` alias for `make-client-weather-request`) while retaining existing names.
+- [x] Evaluate optional per-client configuration model to reduce global mutable state friction.
+  - Evaluation note: `plans/2026-02-16-phase2-client-model-evaluation.md`
 
 ## Phase 3: Documentation And Examples (Planned)
 - [ ] Add a consumer-first quickstart section (Quicklisp + one live fetch + error handling snippet).

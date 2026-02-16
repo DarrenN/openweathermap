@@ -101,6 +101,7 @@ make update-weather-conditions
 - Function naming:
   - =build-*= functions generate endpoint URLs.
   - =make-*= functions return request metadata plist =(:method :get :url "...")=.
+  - For One Call request metadata, =make-onecall-request= is the preferred name; =make-client-weather-request= is retained as a compatibility alias.
   - =fetch-*= functions execute HTTP and return decoded plist responses (or raw tile payload for maps).
 - Response strategy:
   - Baseline representation is plist decoded from JSON.

@@ -171,9 +171,17 @@
   (%build-endpoint-url "/data/3.0/onecall/overview" (list :lat lat :lon lon) query-params))
 
 (defun make-client-weather-request (lat lon &rest query-params)
-  "Build request descriptor plist for One Call endpoint."
+  "Build request descriptor plist for One Call endpoint.
+
+This legacy name is retained for compatibility; prefer MAKE-ONECALL-REQUEST."
   (list :method :get
         :url (apply #'build-onecall-url lat lon query-params)))
+
+(defun make-onecall-request (lat lon &rest query-params)
+  "Build request descriptor plist for One Call endpoint.
+
+Preferred alias for MAKE-CLIENT-WEATHER-REQUEST."
+  (apply #'make-client-weather-request lat lon query-params))
 
 (defun make-timemachine-request (lat lon dt &rest query-params)
   "Build request descriptor plist for One Call timemachine endpoint."
@@ -227,12 +235,14 @@
                (hash-table
                 (let (plist)
                   (maphash (lambda (key item)
-                             (push (normalize-json item) plist)
-                             (push (json-key->keyword key) plist))
+                             (push (json-key->keyword key) plist)
+                             (push (normalize-json item) plist))
                            value)
                   (nreverse plist)))
                (list
                 (mapcar #'normalize-json value))
+               (string
+                value)
                (vector
                 (map 'list #'normalize-json value))
                (t value))))

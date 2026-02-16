@@ -188,6 +188,17 @@ All notable changes to this project are tracked here.
   - JSON-key normalization assertions across One Call, Current, Forecast, Geocoding, and Air Pollution unit tests.
 - Updated examples and integration smoke checks to use normalized key access patterns (`:name`, `:list`, etc.) without escaped-key fallbacks.
 - Updated README response-type notes to document normalized decoded key behavior.
+- Phase 2 ergonomics improvements:
+  - exported condition-reader accessors:
+    - `api-request-error-status-code`
+    - `api-request-error-message`
+    - `api-request-error-endpoint`
+    - `invalid-parameters-error-message`
+  - added `make-onecall-request` as preferred alias for `make-client-weather-request` (compatibility name retained).
+  - added reader/alias unit test coverage in `tests/client-test.lisp`.
+  - documented One Call request-builder alias in `README.org`.
+  - added per-client configuration model evaluation note:
+    - `plans/2026-02-16-phase2-client-model-evaluation.md`
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.
