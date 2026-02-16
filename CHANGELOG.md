@@ -4,6 +4,54 @@
 
 All notable changes to this project are tracked here.
 
+## 2026-02-16
+### Added
+- Ergonomics-and-contract stabilization tracking artifacts:
+  - `plans/2026-02-16-ergonomics-and-contract-stabilization-plan.md`
+  - `plans/2026-02-16-phase2-client-model-evaluation.md`
+- New live parser/contract smoke example:
+  - `examples/09-live-parser-contract-smoke.lisp`
+  - exercises Current, Forecast, Geocoding, One Call, and Air Pollution with live responses
+  - validates normalized decoded JSON shape and representative field types.
+- New examples loop runner:
+  - `scripts/run-examples.sh`
+  - runs all numbered examples with pass/fail/skip summary
+  - supports live-mode control via `OPENWEATHERMAP_RUN_LIVE_EXAMPLES`.
+- New Makefile ergonomics targets:
+  - `make examples`
+  - `make clean-cache`
+
+### Changed
+- Hardened API request contract validation:
+  - One Call family builders now enforce required positional inputs (`lat/lon`, `dt`, and date format as applicable).
+  - Dynamic query plist handling now enforces even key/value structure.
+  - Current/Forecast selectors enforce exactly one location strategy (`lat/lon`, `q`, `id`, or `zip`), including coordinate-pair validation.
+  - Forecast `:cnt` bounds and geocoding `:limit` bounds are validated locally.
+- Tightened request semantics and endpoint guardrails:
+  - Current/Forecast fetch helpers now reject non-JSON modes.
+  - Maps layer input is validated against documented supported layers.
+- Expanded unit and integration coverage to reflect contract hardening:
+  - added/updated tests across client/current/forecast/geocoding/maps/air-pollution suites
+  - integration smoke checks aligned to normalized key access.
+- Improved public API ergonomics:
+  - exported structured condition readers (`api-request-error-*`, `invalid-parameters-error-message`)
+  - added `make-onecall-request` as preferred alias for legacy `make-client-weather-request`.
+- Documentation and examples updated for first-use clarity:
+  - consumer-first quickstart
+  - explicit error-handling section with `handler-case` patterns
+  - contract notes documenting normalized keys and validation behavior
+  - examples refreshed to consistently use normalized key access.
+- OpenAPI specs for current/forecast/geocoding/air-pollution/maps were tightened and synchronized with implementation behavior.
+
+### Fixed
+- JSON decode normalization reliability in the shared client parser:
+  - corrected key/value ordering during hash-table-to-plist conversion
+  - prevented accidental string-to-character-list conversion during normalization.
+- URL/query conformance regressions and edge cases were covered with stricter tests and live example verification.
+- Example/test operational workflow:
+  - added deterministic local cache cleanup
+  - added one-command example execution for both offline and live scenarios.
+
 ## 2026-02-15
 ### Added
 - Initial repository bootstrap for OpenWeatherMap One Call 3.0 Common Lisp client.
