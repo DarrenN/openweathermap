@@ -7,8 +7,8 @@
   (when (ensure-live-integration-api-key)
     (let ((result (openweathermap:fetch-onecall 40.7128 -74.0060 :units :metric :exclude "minutely,alerts")))
       (is (listp result))
-      (is (or (getf result :lat) (getf result :|lat|)))
-      (is (or (getf result :timezone) (getf result :|timezone|))))))
+      (is (getf result :lat))
+      (is (getf result :timezone)))))
 
 (in-suite current-integration-suite)
 
@@ -16,7 +16,7 @@
   (when (ensure-live-integration-api-key)
     (let ((result (openweathermap:fetch-current-weather :q "London" :units :metric)))
       (is (listp result))
-      (is (or (getf result :name) (getf result :|name|))))))
+      (is (getf result :name)))))
 
 (in-suite forecast-integration-suite)
 
@@ -24,7 +24,7 @@
   (when (ensure-live-integration-api-key)
     (let ((result (openweathermap:fetch-forecast :q "London" :units :metric :cnt 2)))
       (is (listp result))
-      (is (or (getf result :list) (getf result :|list|))))))
+      (is (getf result :list)))))
 
 (in-suite geocoding-integration-suite)
 
@@ -40,7 +40,7 @@
   (when (ensure-live-integration-api-key)
     (let ((result (openweathermap:fetch-air-pollution 40.7128 -74.0060)))
       (is (listp result))
-      (is (or (getf result :list) (getf result :|list|))))))
+      (is (getf result :list)))))
 
 (in-suite maps-integration-suite)
 

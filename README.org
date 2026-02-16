@@ -241,7 +241,7 @@ The table below summarizes successful (=200 OK=) response shapes based on OpenWe
 | Maps Tile =/map/{layer}/{z}/{x}/{y}.png= | =fetch-weather-tile= | Binary payload | PNG image bytes/string payload (not JSON) |
 
 Notes:
-- In Lisp, JSON objects are decoded as property lists by default.
+- In Lisp, JSON objects are decoded as property lists with normalized keyword keys (for example, use =:name=, =:weather=, =:dt_txt=).
 - JSON arrays decode to Lisp lists.
 - Optional fields may be absent depending on endpoint, location, and data availability.
 - For One Call endpoint schemas, see =spec/onecall.yaml=.

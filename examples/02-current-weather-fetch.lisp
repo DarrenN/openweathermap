@@ -10,7 +10,6 @@
 
 (let ((result (fetch-current-weather :q "London" :units :metric :lang "en")))
   (format t "~&City: ~A~%"
-          (or (getf result :name) (getf result :|name|)))
+          (getf result :name))
   (format t "Temp: ~A~%"
-          (or (getf (getf result :main) :temp)
-              (and (getf result :|main|) (getf (getf result :|main|) :|temp|)))))
+          (getf (getf result :main) :temp)))

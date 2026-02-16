@@ -71,8 +71,8 @@
       (let ((result (openweathermap:fetch-geocoding "London" :limit 1)))
         (is (listp result))
         (let ((first (first result)))
-          (is (or (equal "London" (getf first :name))
-                  (equal "London" (getf first :|name|)))))))))
+          (is (equal "London" (getf first :name)))
+          (is (null (getf first :|name|))))))))
 
 (test fetch-reverse-geocoding-parses-json
   (let ((openweathermap:*api-key* "test-key"))
@@ -91,5 +91,5 @@
            (values "{\"name\":\"Mountain View\",\"lat\":37.3861}" 200)))
       (let ((result (openweathermap:fetch-zip-geocoding "94040" :country-code "US")))
         (is (listp result))
-        (is (or (equal "Mountain View" (getf result :name))
-                (equal "Mountain View" (getf result :|name|))))))))
+        (is (equal "Mountain View" (getf result :name)))
+        (is (null (getf result :|name|)))))))

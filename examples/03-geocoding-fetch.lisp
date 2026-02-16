@@ -11,7 +11,7 @@
 (let* ((result (fetch-geocoding "New York" :limit 1))
        (first-item (first result)))
   (format t "~&Name: ~A~%"
-          (or (getf first-item :name) (getf first-item :|name|)))
+          (getf first-item :name))
   (format t "Lat/Lon: ~A, ~A~%"
-          (or (getf first-item :lat) (getf first-item :|lat|))
-          (or (getf first-item :lon) (getf first-item :|lon|))))
+          (getf first-item :lat)
+          (getf first-item :lon)))

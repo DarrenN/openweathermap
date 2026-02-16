@@ -176,6 +176,18 @@ All notable changes to this project are tracked here.
   - forecast `:cnt` must be an integer in `1..40`
   - geocoding and reverse-geocoding `:limit` must be an integer in `1..5`.
 - Expanded unit tests for selector exclusivity/coordinate pairing and `:cnt`/`:limit` bounds.
+- Added a stabilization plan document for ergonomics and contract hardening:
+  - `plans/2026-02-16-ergonomics-and-contract-stabilization-plan.md`
+- Stabilized One Call-family request contracts in `src/client.lisp`:
+  - added required positional input validation for onecall/timemachine/day-summary/overview URL builders
+  - added strict even-length query plist validation for dynamic query params
+  - normalized decoded JSON object keys to keyword symbols for consistent `getf` access.
+- Expanded tests for stabilized contract behavior:
+  - One Call builder required-parameter validation and odd query-plist rejection
+  - weather-tile odd query-plist rejection
+  - JSON-key normalization assertions across One Call, Current, Forecast, Geocoding, and Air Pollution unit tests.
+- Updated examples and integration smoke checks to use normalized key access patterns (`:name`, `:list`, etc.) without escaped-key fallbacks.
+- Updated README response-type notes to document normalized decoded key behavior.
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

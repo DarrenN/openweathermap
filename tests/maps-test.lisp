@@ -22,6 +22,11 @@
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-weather-tile-url :temp_new 1 1 -1))))
 
+(test build-weather-tile-url-rejects-odd-query-param-plist
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-weather-tile-url :temp_new 1 1 1 :opacity))))
+
 (test make-weather-tile-request-returns-shape
   (let ((openweathermap:*api-key* "test-key"))
     (let ((request (openweathermap:make-weather-tile-request :clouds_new 2 3 4)))
