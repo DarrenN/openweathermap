@@ -199,6 +199,14 @@ All notable changes to this project are tracked here.
   - documented One Call request-builder alias in `README.org`.
   - added per-client configuration model evaluation note:
     - `plans/2026-02-16-phase2-client-model-evaluation.md`
+- Phase 3 documentation and usability pass:
+  - added a consumer-first quickstart section in `README.org` with load/configure/first-call flow
+  - added explicit `Error Handling` section with `handler-case` examples and accessor usage
+  - added `Contract Notes` clarifying normalized key usage and local validation behavior
+  - aligned documentation with stabilized response contract and One Call builder validation rules
+  - verified runnable examples:
+    - offline: `examples/01-build-urls.lisp`, `examples/06-repl-workflow.lisp`, `examples/07-weather-condition-helpers.lisp`
+    - live (with API key): `examples/02-current-weather-fetch.lisp`, `examples/03-geocoding-fetch.lisp`, `examples/04-maps-tile-fetch.lisp`, `examples/05-all-apis.lisp`, `examples/08-current-weather-enrichment.lisp`
 
 ### Notes
 - Redocly validation passes in this environment; current Node (`v20.10.0`) shows a runtime version warning from Redocly, which recommends `>=20.19.0` or `>=22.12.0`.

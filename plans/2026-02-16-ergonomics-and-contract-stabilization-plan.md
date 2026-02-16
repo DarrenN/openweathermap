@@ -27,11 +27,11 @@ Improve first-use ergonomics and API contract stability for the `openweathermap`
 - [x] Evaluate optional per-client configuration model to reduce global mutable state friction.
   - Evaluation note: `plans/2026-02-16-phase2-client-model-evaluation.md`
 
-## Phase 3: Documentation And Examples (Planned)
-- [ ] Add a consumer-first quickstart section (Quicklisp + one live fetch + error handling snippet).
-- [ ] Document response-key stability contract and validation/error behavior.
-- [ ] Add an explicit “Error Handling” section with `handler-case` patterns.
-- [ ] Refresh examples to follow the stabilized key-access contract consistently.
+## Phase 3: Documentation And Examples (Completed)
+- [x] Add a consumer-first quickstart section (load + first live fetch + key-access pattern).
+- [x] Document response-key stability contract and validation/error behavior.
+- [x] Add an explicit “Error Handling” section with `handler-case` patterns.
+- [x] Refresh examples to follow the stabilized key-access contract consistently.
 
 ## Exit Criteria
 - Phase 1:
