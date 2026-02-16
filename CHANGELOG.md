@@ -140,6 +140,11 @@ All notable changes to this project are tracked here.
   - `enrich-weather-list`
 - Updated ASDF load order to include generated weather-condition data module.
 - Added targeted unit tests for weather-condition helpers in `tests/weather-conditions-test.lisp`.
+- Expanded weather-condition helper test coverage for Phase G3:
+  - known-ID sample assertions (200/500/800/804)
+  - icon URL input validation failure cases
+  - canonical fallback behavior when payload fields are missing
+  - full catalog icon conformance check against supported icon set
 - Documented weather-condition helper API in `README.org` with signatures, return behavior, and examples.
 - Added weather-condition examples:
   - `examples/07-weather-condition-helpers.lisp` (offline helper walkthrough)
