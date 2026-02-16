@@ -14,6 +14,15 @@
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-geocoding-url ""))))
 
+(test build-geocoding-url-validates-limit-range
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-geocoding-url "London" :limit 0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-geocoding-url "London" :limit 6))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-geocoding-url "London" :limit 2.5))))
+
 (test build-reverse-geocoding-url
   (let ((openweathermap:*api-key* "test-key"))
     (let ((url (openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 3)))
@@ -26,6 +35,15 @@
   (let ((openweathermap:*api-key* "test-key"))
     (signals openweathermap:invalid-parameters-error
       (openweathermap:build-reverse-geocoding-url nil 139.0))))
+
+(test build-reverse-geocoding-url-validates-limit-range
+  (let ((openweathermap:*api-key* "test-key"))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 0))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 6))
+    (signals openweathermap:invalid-parameters-error
+      (openweathermap:build-reverse-geocoding-url 35.0 139.0 :limit 3.5))))
 
 (test build-zip-geocoding-url
   (let ((openweathermap:*api-key* "test-key"))

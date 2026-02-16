@@ -204,6 +204,15 @@
                           :endpoint endpoint
                           :message (princ-to-string err)))))))
 
+(defun %ensure-json-mode-for-fetch (mode endpoint-name)
+  "Ensure MODE is NIL or JSON for fetch helpers that always JSON-decode responses."
+  (unless (or (null mode)
+              (and (stringp mode) (string-equal mode "json"))
+              (and (symbolp mode) (string-equal (symbol-name mode) "json")))
+    (error 'invalid-parameters-error
+           :message (format nil "~A fetch currently supports only mode=json because the client JSON-decodes responses."
+                            endpoint-name))))
+
 (defun %execute-json-request (request endpoint)
   "Execute JSON REQUEST descriptor plist and decode response for ENDPOINT."
   (unless (eq (getf request :method) :get)

@@ -17,6 +17,8 @@ For live fetch examples, set:
 export OPENWEATHER_API_KEY="your-key"
 #+end_src
 
+For =fetch-current-weather= / =fetch-forecast= examples, keep =:mode= as JSON (or omit it), since fetch helpers decode JSON responses.
+
 Then run:
 #+begin_src sh
 XDG_CACHE_HOME=$(pwd)/.cache sbcl --script examples/02-current-weather-fetch.lisp

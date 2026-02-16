@@ -193,6 +193,10 @@ This client accepts Common Lisp values and serializes them into query params.
 | =:lang=  | string        | language code                        | =:lang "en"=               | One Call, Current, Forecast |
 | =:mode=  | string        | API-supported response mode          | =:mode "json"=             | Current, Forecast          |
 
+Notes:
+- =fetch-current-weather= and =fetch-forecast= currently support only JSON-decoded responses; use =:mode "json"= (or omit =:mode=).
+- Non-JSON modes (for example =xml=/=html=) can still be generated via =build-*= and =make-*= helpers.
+
 *** Endpoint Parameters
 | Endpoint Family | Function(s)                             | Param             | Type                  | Required | Notes / Example                                |
 |-----------------+-----------------------------------------+-------------------+-----------------------+----------+------------------------------------------------|
@@ -202,17 +206,17 @@ This client accepts Common Lisp values and serializes them into query params.
 | Day Summary     | =fetch-day-summary=                    | =date=            | string                | yes      | =YYYY-MM-DD=                                   |
 | Day Summary     | =fetch-day-summary=                    | =:tz=             | string                | no       | timezone offset/name per API docs              |
 | Overview        | =fetch-overview=                       | =:date=           | string                | no       | =YYYY-MM-DD=                                   |
-| Current/Forecast| =fetch-current-weather=, =fetch-forecast= | location selector | see note              | yes      | one of =:lat/:lon=, =:q=, =:id=, or =:zip=     |
-| Forecast        | =fetch-forecast=                       | =:cnt=            | integer               | no       | number of forecast entries                     |
+| Current/Forecast| =fetch-current-weather=, =fetch-forecast= | location selector | see note              | yes      | exactly one selector: =:lat/:lon= pair, =:q=, =:id=, or =:zip= |
+| Forecast        | =fetch-forecast=                       | =:cnt=            | integer               | no       | number of forecast entries (1..40)            |
 | Geocoding       | =fetch-geocoding=                      | query (positional)| non-empty string      | yes      | city/place query                               |
-| Geocoding       | =fetch-geocoding=                      | =:limit=          | integer               | no       | max results                                    |
+| Geocoding       | =fetch-geocoding=                      | =:limit=          | integer               | no       | max results (1..5)                             |
 | Reverse Geo     | =fetch-reverse-geocoding=              | =lat=, =lon=      | number                | yes      | positional args                                |
-| Reverse Geo     | =fetch-reverse-geocoding=              | =:limit=          | integer               | no       | max results                                    |
+| Reverse Geo     | =fetch-reverse-geocoding=              | =:limit=          | integer               | no       | max results (1..5)                             |
 | ZIP Geo         | =fetch-zip-geocoding=                  | zip (positional)  | non-empty string      | yes      | e.g. ="94040"=                                 |
 | ZIP Geo         | =fetch-zip-geocoding=                  | =:country-code=   | string                | no       | e.g. ="US"=                                    |
 | Air Pollution   | =fetch-air-pollution=, =...-forecast= | =lat=, =lon=      | number                | yes      | positional args                                |
 | Air History     | =fetch-air-pollution-history=          | =start=, =end=    | integer               | yes      | UNIX timestamps, =start <= end=                |
-| Maps            | =fetch-weather-tile=                   | layer             | keyword/string/symbol | yes      | e.g. =:temp_new=, =:clouds_new=                |
+| Maps            | =fetch-weather-tile=                   | layer             | keyword/string/symbol | yes      | one of =:clouds_new=, =:precipitation_new=, =:pressure_new=, =:temp_new=, =:temperature_new=, =:wind_new= |
 | Maps            | =fetch-weather-tile=                   | =z=, =x=, =y=     | non-negative integer  | yes      | tile coordinates                               |
 | Maps            | =fetch-weather-tile=                   | =:opacity=        | number                | no       | e.g. =0.7=                                     |
 | Maps            | =fetch-weather-tile=                   | =:palette=        | string                | no       | e.g. ="warm/cold"=                             |
